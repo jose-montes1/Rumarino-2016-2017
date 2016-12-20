@@ -1,6 +1,7 @@
 #include <msp430.h> 
-#include "../MSP430 - Libs/Serial_JMP.h"
-#include "../MSP430 - Libs/typecast.h"
+#include "Serial_JMP.h"
+#include "General_JMP.h"
+#include "typecast.h"
 /*
  * Created by Jose A. Montes Perez
  * Algorithm taken from  [1] MS5837-30BA datasheet - page 7
@@ -46,36 +47,37 @@ int32 P; //Temperature compensated pressure
 #define PROM_READ_C6 0xAC
 
 //Local dependencies
-char I2C_buffer[8];
+unsigned char I2C_buffer[8];
 
 
 void reset_sequence(){
-	I2C_write(PSENSOR, RESET, 0, 0);						//Send reset command to the pressure sensor
+	I2C_write(PSENSOR, RESET, 0, 0);	//Send reset command to the pressure sensor
+	delay(20);
 }
 void read_factory_calibration(){
-	I2C_read(PSENSOR, PROM_READ_C1, &I2C_buffer, 2);
+	I2C_read(PSENSOR, PROM_READ_C1, &I2C_buffer[0], 2);
 	C1 = (I2C_buffer[0] << 8) | I2C_buffer[1];
-	I2C_read(PSENSOR, PROM_READ_C2, &I2C_buffer, 2);
+	I2C_read(PSENSOR, PROM_READ_C2, &I2C_buffer[0], 2);
 	C2 = (I2C_buffer[0] << 8) | I2C_buffer[1];
-	I2C_read(PSENSOR, PROM_READ_C3, &I2C_buffer, 2);
+	I2C_read(PSENSOR, PROM_READ_C3, &I2C_buffer[0], 2);
 	C3 = (I2C_buffer[0] << 8) | I2C_buffer[1];
-	I2C_read(PSENSOR, PROM_READ_C4, &I2C_buffer, 2);
+	I2C_read(PSENSOR, PROM_READ_C4, &I2C_buffer[0], 2);
 	C4 = (I2C_buffer[0] << 8) | I2C_buffer[1];
-	I2C_read(PSENSOR, PROM_READ_C5, &I2C_buffer, 2);
+	I2C_read(PSENSOR, PROM_READ_C5, &I2C_buffer[0], 2);
 	C5 = (I2C_buffer[0] << 8) | I2C_buffer[1];
-	I2C_read(PSENSOR, PROM_READ_C6, &I2C_buffer, 2);
+	I2C_read(PSENSOR, PROM_READ_C6, &I2C_buffer[0], 2);
 	C6 = (I2C_buffer[0] << 8) | I2C_buffer[1];
 }
 
 void read_conversions(){
-	I2C_write(PSENOR, CONVERT_D1, 0, 0);
+	I2C_write(PSENSOR, CONVERT_D1, 0, 0);
 	delay(20);												//Wait 20ms (worst case) for conversion to end
-	I2C_read(PSENSOR, ADC_READ, &I2C_buffer, 3);
-	D1 = (I2C_buffer[0] << 16) | (I2C_buffer[1] << 8) | I2C_buffer[3];
-	I2C_write(PSENOR, CONVERT_D2, 0, 0);
+	I2C_read(PSENSOR, ADC_READ, &I2C_buffer[0], 3);
+	D1 = ((uint32) I2C_buffer[0] << 16) | ((uint32) I2C_buffer[1] << 8) | I2C_buffer[3];
+	I2C_write(PSENSOR, CONVERT_D2, 0, 0);
 	delay(20);												//Wait 20ms (worst case) for conversion to end
-	I2C_read(PSENSOR, ADC_READ, &I2C_buffer, 3);
-	D2 = (I2C_buffer[0] << 16) | (I2C_buffer[1] << 8) | I2C_buffer[3];
+	I2C_read(PSENSOR, ADC_READ, &I2C_buffer[0], 3);
+	D2 = ((uint32) I2C_buffer[0] << 16) | ((uint32) I2C_buffer[1] << 8) | I2C_buffer[3];
 }
 
 
@@ -95,7 +97,7 @@ int main(void) {
 	dT = D2 - (uint32) (C5 << 8);
 	TEMP = 2000 + ((dT*C6) >> 23);
 
-	OFF = (uint32) (C2 << 16) + ((C4*dT) >> 7);
+	OFF = ((uint32) C2 << 16) + ((C4*dT) >> 7);
 	SENS = (uint32) (C1 << 15) + ((C3*dT) >> 8);
 	P = ((D1*SENS)>>21) - (OFF >> 13);
 
