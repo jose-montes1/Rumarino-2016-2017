@@ -8,3 +8,4 @@ Work Listed in order:
 3. Started the pressure sensor beta software for the msp430
 4. Re-wrote I2C code to be more general, include NACK and multiple transactions - Not tested
 5. Wrote the code for the beta - Not tested
+6. Added typecasts to code - Not tested but builds
