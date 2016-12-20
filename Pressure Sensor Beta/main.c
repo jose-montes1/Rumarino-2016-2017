@@ -1,5 +1,6 @@
 #include <msp430.h> 
 #include "../MSP430 - Libs/Serial_JMP.h"
+#include "../MSP430 - Libs/typecast.h"
 /*
  * Created by Jose A. Montes Perez
  * Algorithm taken from  [1] MS5837-30BA datasheet - page 7
@@ -9,22 +10,22 @@
 
 //Data sheet variables
 //Variable names taken straight from datasheet
-unsigned int C1; //Pressure Sensitivity
-unsigned int C2; //Pressure Offset
-unsigned int C3; //Temperature coefficient of pressure sensitivity
-unsigned int C4; //Temperature coefficient of pressure offset
-unsigned int C5; //Reference temperature
-unsigned int C6; //Temperature coefficient of the temperature
+uint16 C1; //Pressure Sensitivity
+uint16 C2; //Pressure Offset
+uint16 C3; //Temperature coefficient of pressure sensitivity
+uint16 C4; //Temperature coefficient of pressure offset
+uint16 C5; //Reference temperature
+uint16 C6; //Temperature coefficient of the temperature
 
-unsigned long D1; //Digital pressure value
-unsigned long D2; //Digital temperature value
+uint32 D1; //Digital pressure value
+uint32 D2; //Digital temperature value
 
-signed long dT; //Difference between actual and reference value
-signed long TEMP; //Actual temperature
+int32 dT; //Difference between actual and reference value
+int32 TEMP; //Actual temperature
 
-signed long long OFF; //Offset actual temperature
-signed long long SENS; //Sensitivity at actual temperature
-signed long P; //Temperature compensated pressure
+int32 long OFF; //Offset actual temperature
+int32 long SENS; //Sensitivity at actual temperature
+int32 P; //Temperature compensated pressure
 
 
 
@@ -91,11 +92,11 @@ int main(void) {
 	read_conversions();
 
 
-	dT = D2 - (C5 << 8);
-	TEMP = 2000 + (dT*(C6 >> 23));
+	dT = D2 - (uint32) (C5 << 8);
+	TEMP = 2000 + ((dT*C6) >> 23);
 
-	OFF = (C2 << 16) + ((C4*dT) >> 7);
-	SENS = (C1 << 15) + ((C3*dT) >> 8);
+	OFF = (uint32) (C2 << 16) + ((C4*dT) >> 7);
+	SENS = (uint32) (C1 << 15) + ((C3*dT) >> 8);
 	P = ((D1*SENS)>>21) - (OFF >> 13);
 
 
