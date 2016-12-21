@@ -11,6 +11,7 @@
  * sparkfun RAzor 9dog IMU[1] with the msp430f559lp.
  * The code is inspired via the firmware found in [2].
  *
+ * Depends on Serial_JMP.h
  *
  * Wiring diagram:
  * P3.3 -> TX@Razor
@@ -22,10 +23,8 @@
  * [2]https://github.com/Razor-AHRS/razor-9dof-ahrs
  *
  *
- * main.c
+ *
  */
-
-
 
 
 unsigned char *inputBuffer[36];
@@ -53,7 +52,7 @@ void TIMER_setup(int milliseconds){
 	}
 }
 // Complimentary ISR to timer. This sends the request for the data to the IMU
-#pragma vector=TIMER0_A0_VECTOR
+#p7ragma vector=TIMER0_A0_VECTOR
 __interrupt void TIMER0_A0_ISR(void){
 	__bic_SR_register_on_exit(LPMO_bits);
 }
@@ -74,24 +73,59 @@ void calibration_mode(){
 
 	UART_print("#o0");			//Setup the razor for non-continuous stream
 	UART_print("#osrt");		//Set the output to raw data in text format
-
+	//UART_print("#osrb");		//Set the output to raw data in binary format
+	UART_print("#f");
+	int i;
+	for(i = 0; i < 36; i++){
+		UART_receive_byte(inBuffer[i]);
+	}
+	USB_print(inBuffer);
 }
 
 
+void read_sensors_mode(){
+
+	UART_print("#o0");			//Setup the razor for non-continuous stream
+	UART_print("#osct");		//Set the output to calibrated data in text format
+	//UART_print("#oscb");		//Set the output to calibrated data in binary format TODO - have to make binary parser
+	int i;
+	for(i = 0; i < 36; i++){
+		UART_receive_byte(inBuffer[i]);
+	}
+	USB_print(inBuffer);
+}
+
+void read_angles_mode(){
+
+	UART_print("#o0");			//Setup the razor for non-continuous stream
+	UART_prinnt("#oc");			//Setup the razor for calibrated output
+	UART_print("#ot");			//Set the output for angles in text format
+	//UART_print("#ob");		//Set the output for angles in binary format
+	int i;
+	for(i = 0; i < 9; i++){
+		UART_receive_byte(inBuffer[i]);
+	}
+	inBuffer[9] = 0x0A;			// Hardcore new line character
+	USB_print(inBuffer);
+}
+
+
+/**********************************************{}****************************************************
+ * Current main configuration
+ * This main is setup to control the output of the Razor IMU and read the raw values to
+ * calibrate it.
+ *
+ *
+ */
 
 void main(void) {
-    WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
 	UART_setup(57600);
-    USB_setup(9600);
-    calibration_mode();
-    TIMER_setup(30);
-    while(1){
-    	UART_print("#f");
-    	int i;
-    	for(i = 0; i < 36; i++){
-    		UART_receive_byte(inBuffer[i]);
-    	}
-    	USB_print(inBuffer);
-    	__bis_SR_register(LPM0_bits);
-    }
+	USB_setup(9600);
+	TIMER_setup(30);
+	while(1){
+		calibration_mode();
+		__bis_SR_register(LPM0_bits);
+	}
 }
+`

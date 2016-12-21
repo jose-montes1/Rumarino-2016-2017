@@ -22,7 +22,7 @@ __interrupt void USCI_A0_ISR(void);
 
 void I2C_setup(unsigned long baudRate);
 void I2C_write(unsigned char slaveAddress, unsigned char registerAddress, unsigned char *data, unsigned int length);
-void I2C_read(unsigned char slaveAddress, unsigned char registerAddress, unsigned char *readDestination, unsigned int length);
+void I2C_read(unsigned char slaveAddress, unsigned char registerAddress, unsigned int *readDestination, unsigned int length);
 __interrupt void USCI_B0_ISR(void);
 
 #endif /* SERIAL_JMP_H_ */
