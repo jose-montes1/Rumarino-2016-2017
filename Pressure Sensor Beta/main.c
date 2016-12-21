@@ -80,8 +80,29 @@ void read_conversions(){
 	D2 = ((uint32) I2C_buffer[0] << 16) | ((uint32) I2C_buffer[1] << 8) | I2C_buffer[3];
 }
 
+void test_case() {
 
+	C1 = 34982;
+	C2 = 36352;
+	C3 = 20328;
+	C4 = 22354;
+	C5 = 26646;
+	C6 = 26146;
 
+	D1 = 4958179;
+	D2 = 6815414;
+
+}
+
+void calculate(){
+	dT = D2 - (uint32) (C5 << 8);
+	TEMP = 2000 + ((dT* (uint32) C6) >> 23);
+
+	OFF = ((uint32) C2 << 16) + (((uint32)C4*dT) >> 7);
+	SENS = (uint32) (C1 << 15) + (((int32) C3*dT) >> 8);
+	P = ((((D1*SENS)>>21) - OFF) >> 13);
+
+}
 
 
 
@@ -94,14 +115,12 @@ int main(void) {
 	read_factory_calibration();
 	read_conversions();
 
-
-	dT = D2 - (uint32) (C5 << 8);
-	TEMP = 2000 + ((dT*C6) >> 23);
-
-	OFF = ((uint32) C2 << 16) + ((C4*dT) >> 7);
-	SENS = (uint32) (C1 << 15) + ((C3*dT) >> 8);
-	P = ((D1*SENS)>>21) - (OFF >> 13);
+	calculate();
 	_no_operation();
+
+
+	//First order compensation
+
 
 
 	return 0;
