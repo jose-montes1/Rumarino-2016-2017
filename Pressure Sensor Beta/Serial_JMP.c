@@ -133,9 +133,9 @@ void UART_print_value(char *string, int value){
 		string++;
 	}
 	while(*intArr){
-			UART_transmit_byte(*intArr);
-			intArr++;
-		}
+		UART_transmit_byte(*intArr);
+		intArr++;
+	}
 }
 
 
@@ -157,6 +157,8 @@ unsigned char *rxDest;
 unsigned char rxByteCtr;
 unsigned int txByteCtr;
 unsigned int txLength;
+unsigned int rx;
+#define DELAY 100
 /*\***********************************************************************************************************
  *Function Description
  * 	Bootstrap for the I2C serial bus on UCB0
@@ -167,22 +169,22 @@ unsigned int txLength;
  *\************************************************************************************************************/
 void I2C_setup(unsigned long baudRate){
 
-  P3SEL |= 0x03;                            // Assign I2C pins to USCI_B0
-  UCB0CTL1 |= UCSWRST;                      // Enable SW reset
-  UCB0CTL0 = UCMST + UCMODE_3 + UCSYNC;     // I2C Master, synchronous mode
-  UCB0CTL1 = UCSSEL_2 + UCSWRST;            // Use SMCLK, keep SW reset
-  if(baudRate == 10000){
-	UCB0BR0 = 105;                          // fSCL = SMCLK/105 = ~10kHz
-	UCB0BR1 = 0;
-  }if(baudRate == 100000){
-	UCB0BR0 = 105;                          // fSCL = SMCLK/12 = ~100kHz
-  	UCB0BR1 = 0;
-  }if(baudRate == 400000){
-	  UCB0BR0 = 3;
-	  UCB0BR1 = 0;
-  }
-  UCB0CTL1 &= ~UCSWRST;                     // Clear SW reset, resume operation
-  UCB0IE |= UCRXIE + UCTXIE;                // Enable interrupts
+	P3SEL |= 0x03;                            // Assign I2C pins to USCI_B0
+	UCB0CTL1 |= UCSWRST;                      // Enable SW reset
+	UCB0CTL0 = UCMST + UCMODE_3 + UCSYNC;     // I2C, Master, synchronous mode
+	UCB0CTL1 = UCSSEL_2 + UCSWRST;            // Use SMCLK, keep SW reset
+	if(baudRate == 10000){
+		UCB0BR0 = 105;                          // fSCL = SMCLK/105 = ~10kHz
+		UCB0BR1 = 0;
+	}if(baudRate == 100000){
+		UCB0BR0 = 105;                          // fSCL = SMCLK/12 = ~100kHz
+		UCB0BR1 = 0;
+	}if(baudRate == 400000){
+		UCB0BR0 = 3;
+		UCB0BR1 = 0;
+	}
+	UCB0CTL1 &= ~UCSWRST;                     // Clear SW reset, resume operation
+	UCB0IE |= UCRXIE + UCTXIE;                // Enable interrupts
 }
 /*\**********************************************************************************************************
  *Function Description
@@ -194,18 +196,20 @@ void I2C_setup(unsigned long baudRate){
  * 	 Amount - Amount of bytes to send
  *\\**********************************************************************************************************/
 
- 
- 
- 
+
+
+
 void I2C_write(unsigned char slaveAddress, unsigned char registerAddress, unsigned char *data, unsigned int length){
+	_BIC_SR(GIE);
+	rx = 0x00;
 	txByteCtr = length;						// Set global variable
 	txLength = length;
 	txAddress = registerAddress;			// Set global variable
 	txData = data;
 	UCB0I2CSA = slaveAddress;               // Slave Address
-    while (UCB0CTL1 & UCTXSTP);             // Ensure stop condition got sent
-    UCB0CTL1 |= UCTR + UCTXSTT;             // I2C TX, start condition
-    __bis_SR_register(LPM0_bits + GIE);     // Enter LPM0 w/ interrupts
+	while (UCB0CTL1 & UCTXSTP);             // Ensure stop condition got sent
+	UCB0CTL1 |= UCTR + UCTXSTT;             // I2C TX, start condition
+	__bis_SR_register(LPM0_bits + GIE);     // Enter LPM0 w/ interrupts
 }
 
 /*\***********************************************************************************************************
@@ -220,12 +224,13 @@ void I2C_write(unsigned char slaveAddress, unsigned char registerAddress, unsign
 
 
 void I2C_read(unsigned char slaveAddress, unsigned char registerAddress, unsigned char *readDestination, unsigned int length){
-    I2C_write(slaveAddress, registerAddress, 0, 0);		// Send slave device register address
+	I2C_write(slaveAddress, registerAddress, 0, 0);		// Send slave device register address
 	__bic_SR_register(GIE);								// Clear interrupts just in case
+	rx = 0xFF;
 	rxByteCtr = length;									// Set global variable
 	rxDest = readDestination;							// Pass along the destination of the read
 	while (UCB0CTL1 & UCTXSTP);             			// Ensure stop condition got sent
-	UCB0CTL1 &= ~UCTR ;                     			// Clear UCTR
+	UCB0CTL1 &= ~UCTR;                     			// Clear UCTR
 	UCB0CTL1 |= UCTXSTT;                    			// I2C start condition
 	if(rxByteCtr == 1){									// Only receiving one byte?
 		while (UCB0CTL1 & UCTXSTT);         			// Start condition sent?
@@ -243,45 +248,53 @@ void I2C_read(unsigned char slaveAddress, unsigned char registerAddress, unsigne
  *\************************************************************************************************************/
 #pragma vector = USCI_B0_VECTOR
 __interrupt void USCI_B0_ISR(void){
-  switch(__even_in_range(UCB0IV, 12)){
+	switch(__even_in_range(UCB0IV, 12)){
 	case 2:												// NACK IFG
 		UCB0CTL1 |= UCTXSTP;			    			// Send stop condition
 		UCB0IFG &= ~UCRXIFG;							// Clear any mistaken flag
 		__bic_SR_register_on_exit(LPM0_bits);			// Exit low power mode
 		break;
-		
-  case 10:												// RxIFG - Receive interrupt condition
-	  rxByteCtr--;										// Decrease Rx counter
-	  if(rxByteCtr){									// More than 1 value left
-		  *rxDest++ = UCB0RXBUF;						// Receive into memory 
-		  if(rxByteCtr == 1){							// One byte left
-			  UCB0CTL1 |= UCTXSTP;						// Initiate stop after next byte read
-		  }
-	  }else{											// Last byte to read
-		  *rxDest = UCB0RXBUF;							// Allocate in memory
-		  UCB0IFG &= ~UCRXIFG;							// Clear any mistaken flag
-		  __bic_SR_register_on_exit(LPM0_bits);			// Exit low power mode
-	  }  
-	
-	case 12: 											// TxIFG - Receive interrupt condition
-		if(txByteCtr == txLength){						// Check if its the first transmission
-			UCB0TXBUF = txAddress;						// Send the slave device register to write or read
-			if (txLength == 0){							// Verify if only sending register address
-				UCB0CTL1 |= UCTXSTP;					// Send stop condition
+
+	case 10: // RxIFG - Receive interrupt condition
+		if(rx){
+			rxByteCtr--;										// Decrease Rx counter
+			if(rxByteCtr){									// More than 1 value left
+				*rxDest++ = UCB0RXBUF;						// Receive into memory
+				if(rxByteCtr == 1){							// One byte left
+					__delay_cycles(DELAY);
+					UCB0CTL1 |= UCTXSTP;						// Initiate stop after next byte read
+				}
+			}else{											// Last byte to read
+				*rxDest = UCB0RXBUF;							// Allocate in memory
+				UCB0IFG &= ~UCRXIFG;							// Clear any mistaken flag
+				__bic_SR_register_on_exit(LPM0_bits);			// Exit low power mode
 			}
-			txLength++;									// Invalidate conditional to avoid looping in
-			break;
-		}else if(txByteCtr > 0){						// More than 1 byte left to send?
-			UCB0TXBUF = *txData++;						// Send next byte and increase pointer directive
-			txByteCtr--;								// Decrease amount of bytes left to send
-		}else{											// Last byte to be sent	
-			UCB0TXBUF = *txData;						// Send last byte
-			UCB0CTL1 |= UCTXSTP;						// Send stop condition
-			UCB0IFG &= ~UCTXIFG;						// Clear interrupt in (missfire check)
-			__bic_SR_register_on_exit(LPM0_bits);		// Exit low power mode - concludes transmission
+		}
+	case 12: 											    // TxIFG - Receive interrupt condition
+		if(!rx){
+			if(txByteCtr == txLength){						// Check if its the first transmission
+				UCB0TXBUF = txAddress;						// Send the slave device register to write or read
+				if (txLength == 0){							// Verify if only sending register address
+					__delay_cycles(DELAY);
+					UCB0CTL1 |= UCTXSTP;					// Send stop condition
+					UCB0IFG &= ~UCTXIFG;						// Clear interrupt in (missfire check)
+					__bic_SR_register_on_exit(LPM0_bits);		// Exit low power mode - concludes transmission
+				}
+				txLength++;									// Invalidate conditional to avoid looping in
+				break;
+			}else if(txByteCtr > 0){						// More than 1 byte left to send?
+				UCB0TXBUF = *txData++;						// Send next byte and increase pointer directive
+				txByteCtr--;								// Decrease amount of bytes left to send
+			}else{											// Last byte to be sent
+				UCB0TXBUF = *txData;						// Send last byte
+				__delay_cycles(DELAY);
+				UCB0CTL1 |= UCTXSTP;						// Send stop condition
+				UCB0IFG &= ~UCTXIFG;						// Clear interrupt in (missfire check)
+				__bic_SR_register_on_exit(LPM0_bits);		// Exit low power mode - concludes transmission
+			}
 		}
 	default: break;
-  }
+	}
 }
 ///// END OF I2C
 ////////////////////////////////////////////////////////////////////////////////////////////////////////

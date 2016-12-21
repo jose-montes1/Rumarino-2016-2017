@@ -52,7 +52,7 @@ unsigned char I2C_buffer[8];
 
 void reset_sequence(){
 	I2C_write(PSENSOR, RESET, 0, 0);	//Send reset command to the pressure sensor
-	delay(20);
+	__delay_cycles(2000);
 }
 void read_factory_calibration(){
 	I2C_read(PSENSOR, PROM_READ_C1, &I2C_buffer[0], 2);
@@ -87,7 +87,8 @@ void read_conversions(){
 
 int main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
-	I2C_setup(100000);			//Start I2C communication at 100k bps
+//    _BIS_SR(GIE);
+	I2C_setup(400000);			//Start I2C communication at 100k bps
 
 	reset_sequence();
 	read_factory_calibration();
@@ -100,7 +101,7 @@ int main(void) {
 	OFF = ((uint32) C2 << 16) + ((C4*dT) >> 7);
 	SENS = (uint32) (C1 << 15) + ((C3*dT) >> 8);
 	P = ((D1*SENS)>>21) - (OFF >> 13);
-
+	_no_operation();
 
 
 	return 0;
