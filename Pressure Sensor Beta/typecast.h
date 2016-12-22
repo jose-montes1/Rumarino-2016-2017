@@ -24,4 +24,3 @@
  
  
  #endif /* TYPECAST_H_ */
-

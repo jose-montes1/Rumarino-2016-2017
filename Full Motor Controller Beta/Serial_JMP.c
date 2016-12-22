@@ -105,16 +105,6 @@ void UART_print(char *string){
 		string++;							// Load next byte
 	}
 }
-/*\**********************************************************************************************************
- *Function Description
- * 	Prints out a stream of data from the uart line ending with a new line character
- *Parameters
- *  String - Character array to be printed
- *\**********************************************************************************************************/
-void UART_println(char *string){
-	UART_print(string);
-	UART_transmit_byte('\n');
-}
 
 /*\**********************************************************************************************************
  *Function Description
@@ -242,17 +232,6 @@ void USB_print(char *string){
 		USB_transmit_byte(*string);				// Send one byte
 		string++;							// Load next byte
 	}
-}
-/*\**********************************************************************************************************
- *Function Description
- * 	Prints out a stream of data from the uart line ending with a new line character
- *Parameters
- *  String - Character array to be printed
- *\**********************************************************************************************************/
-
-void USB_println(char *string){
-	USB_print(string);
-	USB_transmit_byte('\n');
 }
 
 /*\**********************************************************************************************************

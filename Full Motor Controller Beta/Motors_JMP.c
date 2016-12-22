@@ -21,9 +21,10 @@
  */
 
  
-#define REFRESH_RATE 655
-#define DEADBAND 7500
-#define RANGE 20
+#define REFRESH_RATE 52429
+#define DEADBAND 3932
+#define RANGE 1048
+#define RANGE_MARRON 10
 
 /***********************************************************************************
  *Function Description
@@ -36,26 +37,33 @@
 void MOTOR_full_setup(){
 	
 	P2DIR |= BIT4 + BIT5;								// Setup motor 1 & 2 pins as output for pwm
+	//P2OUT |= BIT4 + BIT5;								// Set as pwm output
 	P2SEL |= BIT4 + BIT5;								// Select timer module over gpio
 	
+
+
 	P1DIR |= BIT4 + BIT3;								// Setup motor 3 & 4 pins as output for pwm
+	//P1OUT |= BIT4 + BIT3;
 	P1SEL |= BIT4 + BIT3;								// Select timer module over gpio
 
 
 	TA0CCR0 = REFRESH_RATE;								// Set the refresh rate of the pwm signal to 50Hz
 	TA2CCR0 = REFRESH_RATE;								// Set the refresh rate of the pwm signal to 50Hz
 	
-	TA2CCTL1 = OUTMOD_3;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
+	TA2CCTL1 = OUTMOD_7;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
 	TA2CCR1 = REFRESH_RATE;                    	  	    // No ouptut signal
-	TA2CCTL2 = OUTMOD_3;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
+	TA2CCTL2 = OUTMOD_7;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
 	TA2CCR2 = REFRESH_RATE;                     	    // No ouptut signal
-	TA0CCTL2 = OUTMOD_3;                       	        // Set Capture Compare Rregister 3 to reset/set mode
+	TA0CCTL2 = OUTMOD_7;                       	        // Set Capture Compare Rregister 3 to reset/set mode
 	TA0CCR2 = REFRESH_RATE;                             // No ouptut signal
-	TA0CCTL3 = OUTMOD_3;		     		     		// Set Capture Compare Rregister 2 to reset/set mode
+	TA0CCTL3 = OUTMOD_7;		     		     		// Set Capture Compare Rregister 2 to reset/set mode
 	TA0CCR3 = REFRESH_RATE;					   			// No output signal
 
-	TA0CTL = TASSEL_1 + MC_1 + TACLR;     	  			// ACLK, up mode, clear T
-	TA2CTL = TASSEL_1 + MC_1 + TACLR;        		 	// ACLK, up mode, clear T
+
+	TA0R = 0;
+	TA2R = 0;
+	TA0CTL = TASSEL_2 + MC_1;     	  			// ACLK, up mode, clear T
+	TA2CTL = TASSEL_2 + MC_1;        		 	// ACLK, up mode, clear T
 
 }
 
@@ -69,16 +77,18 @@ void MOTOR_full_setup(){
 void MOTOR_half_setup(){
 	
 	P2DIR |= BIT4 + BIT5;								// Setup motor 1 & 2 pins as output for pwm
+	P2OUT |= BIT4 + BIT5;								// Set as pwm output
 	P2SEL |= BIT4 + BIT5;								// Select timer module over gpio
 	
 	TA2CCR0 = REFRESH_RATE;								// Set the refresh rate of the pwm signal to 50Hz
 	
-	TA2CCTL1 = OUTMOD_3;            	             	// Set Capture Compare Rregister 3 to reset/set mode
+	TA2CCTL1 = OUTMOD_7;            	             	// Set Capture Compare Rregister 3 to reset/set mode
 	TA2CCR1 = REFRESH_RATE;                       		// No ouptut signal
-	TA2CCTL2 = OUTMOD_3;            	             	// Set Capture Compare Rregister 3 to reset/set mode
+	TA2CCTL2 = OUTMOD_7;            	             	// Set Capture Compare Rregister 3 to reset/set mode
 	TA2CCR2 = REFRESH_RATE;                       		// No ouptut signal
 	
-	TA2CTL = TASSEL_1 + MC_1 + TACLR;       			// ACLK, up mode, clear T
+	TA0R = 0;
+	TA2CTL = TASSEL_2 + MC_1;       			// ACLK, up mode, clear T
 }
 
 
@@ -94,8 +104,7 @@ void MOTOR_half_setup(){
 
 void MOTOR_speed(int speed, unsigned int motor){
 	if((speed < 101) && (speed > -101 ) && (motor < 6)){			// Verify correct parameters
-		unsigned int dutyCycle = speed*RANGE + DEADBAND;						// Calculate appropriate duty cycle
-		unsigned int operations = (dutyCycle*ServoMS)/100;					// Calculate the appropriate register value
+		unsigned int operations = (speed*RANGE_MARRON) + DEADBAND;		// Calculate appropriate duty cycle
 		TA0R = 0;													// Reset timer count
 		TA2R = 0;													// Reset timer count
 		switch (motor){												// Verify which motor to modify

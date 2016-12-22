@@ -37,24 +37,24 @@ void UART_setup(unsigned long baudRate){
 	UCA1CTL1 |= UCSSEL_2;                     // CLK = SUBMAINCLK
 	switch(baudRate){
 	case 9600:
-		UCA1BR0 = 109;                           // 1.048MHz/9600=109 (see User's Guide)
-		UCA1BR1 = 0x00;                          //
-		UCA1MCTL |= UCBRS_2+UCBRF_0;             // Modulation UCBRSx=3, UCBRFx=0
+		UCA0BR0 = 109;                           // 1.048MHz/9600=109 (see User's Guide)
+		UCA0BR1 = 0x00;                          //
+		UCA0MCTL |= UCBRS_2+UCBRF_0;             // Modulation UCBRSx=3, UCBRFx=0
 		break;
 	case 19200:
-		UCA1BR0 = 52;
-		UCA1BR1 = 0x00;
-		UCA1MCTL |= UCBRS_0 +UCBRF_0;            // Modulation UCBRSx=0, UCBRFx=0
+		UCA0BR0 = 52;
+		UCA0BR1 = 0x00;
+		UCA0MCTL |= UCBRS_0 +UCBRF_0;            // Modulation UCBRSx=0, UCBRFx=0
 		break;
 	case 38400:
-		UCA1BR0 = 26;
-		UCA1BR1 = 0;
-		UCA1MCTL |= UCBRS_0 +UCBRF_0;            // Modulation UCBRSx=0, UCBRFx=0
+		UCA0BR0 = 26;
+		UCA0BR1 = 0;
+		UCA0MCTL |= UCBRS_0 +UCBRF_0;            // Modulation UCBRSx=0, UCBRFx=0
 		break;
 	case 57600:
-		UCA1BR0 = 17;
-		UCA1BR1 = 0;
-		UCA1MCTL = UCBRS_3 + UCBRS_0;
+		UCA0BR0 = 17;
+		UCA0BR1 = 0;
+		UCA0MCTL = UCBRS_3 + UCBRS_0;
 		break;
 	case 115200:
 	default:									//Catch incorrect error
@@ -64,7 +64,7 @@ void UART_setup(unsigned long baudRate){
 			__delay_cycles(50000);				// Delay
 		}
 	}
-	UCA1CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
+	UCA0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
 
 }
 /*\**********************************************************************************************************
@@ -74,8 +74,8 @@ void UART_setup(unsigned long baudRate){
  *	Byte - information to be sent
  *\**********************************************************************************************************/
 void UART_transmit_byte(unsigned char byte){
-	while(!(UCA1IFG & UCTXIFG));
-	UCA1TXBUF = byte;
+	while(!(UCA0IFG & UCTXIFG));
+	UCA0TXBUF = byte;
 }
 
 
@@ -87,10 +87,10 @@ void UART_transmit_byte(unsigned char byte){
  *\**********************************************************************************************************/
 char uartBuff;
 void UART_receive_byte(char *dest){
-	UCA1IE |= UCRXIE;                         // Enable USCI_A0 RX interrupt
+	UCA0IE |= UCRXIE;                         // Enable USCI_A0 RX interrupt
 	LPM0;									  // Wait for interrupt
 	*dest = uartBuff;						  // Receive from global variable
-	UCA1IE &= ~UCRXIE;                         // Disable USCI_A0 RX interrupt
+	UCA0IE &= ~UCRXIE;                         // Disable USCI_A0 RX interrupt
 }
 
 /*\**********************************************************************************************************
@@ -142,11 +142,160 @@ void UART_print_value(char *string, int value){
 //UART Interrupt Vector
 #pragma vector=USCI_A0_VECTOR
 __interrupt void USCI_A0_ISR(void){
-	if(UCA1IV == 0x02){						// Receive interrupt
-		uartBuff = UCA1RXBUF;				// Export to global variable
+	if(UCA0IV == 0x02){						// Receive interrupt
+		uartBuff = UCA0RXBUF;				// Export to global variable
 		LPM0_EXIT;							// Exit low power mode
 	}
 }
+
+/*\**********************************************************************************************************
+ * Function Description
+ *    Sets up the baud generator for a specific frequency
+ * Parameters-
+ * 	baudRate - defines the baud rate for communication
+ * 		valid frequencies are 9600 and its multiples up to
+ * 		115200. Suggested low frequency
+ *\**********************************************************************************************************/
+
+void USB_setup(unsigned long baudRate){
+	P4SEL = BIT5+BIT4;                        // P3.4,5 = USCI_A0 TXD/RXD
+	//P3REN = BIT3;							// Set up resistor for BT module
+	//P3OUT = BIT3;							// Make it pull up
+	UCA1CTL1 |= UCSWRST;                      // **Put state machine in reset**
+	UCA1CTL1 |= UCSSEL_2;                     // CLK = SUBMAINCLK
+	switch(baudRate){
+	case 9600:
+		UCA1BR0 = 109;                           // 1.048MHz/9600=109 (see User's Guide)
+		UCA1BR1 = 0x00;                          //
+		UCA1MCTL |= UCBRS_2+UCBRF_0;             // Modulation UCBRSx=3, UCBRFx=0
+		break;
+	case 19200:
+		UCA1BR0 = 52;
+		UCA1BR1 = 0x00;
+		UCA1MCTL |= UCBRS_0 +UCBRF_0;            // Modulation UCBRSx=0, UCBRFx=0
+		break;
+	case 38400:
+		UCA1BR0 = 26;
+		UCA1BR1 = 0;
+		UCA1MCTL |= UCBRS_0 +UCBRF_0;            // Modulation UCBRSx=0, UCBRFx=0
+		break;
+	case 57600:
+		UCA1BR0 = 17;
+		UCA1BR1 = 0;
+		UCA1MCTL = UCBRS_3 + UCBRS_0;
+		break;
+	case 115200:
+	default:									//Catch incorrect error
+		P4DIR |= BIT7;							// Set on board LED on
+		while(1){								// Error trap infinite while loop
+			P4OUT ^= BIT7;						// Toggle led
+			__delay_cycles(50000);				// Delay
+		}
+	}
+	UCA1CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
+
+}
+/*\**********************************************************************************************************
+ *Function Description
+ * 	Transmits one byte over the Serial UART line
+ *Parameters
+ *	Byte - information to be sent
+ *\**********************************************************************************************************/
+
+
+void USB_transmit_byte(unsigned char byte){
+	while(!(UCA1IFG & UCTXIFG));
+	UCA1TXBUF = byte;
+}
+
+
+/*\**********************************************************************************************************
+ *Function Description
+ * 	Receives one Byte of information from the UART serial line
+ *Parameters
+ *	Dest - destination were the byte will be stored
+ *\**********************************************************************************************************/
+
+
+char USBBuff;
+void USB_receive_byte(char *dest){
+	UCA1IE |= UCRXIE;                         // Enable USCI_A0 RX interrupt
+	LPM0;									  // Wait for interrupt
+	*dest = USBBuff;						  // Receive from global variable
+	UCA1IE &= ~UCRXIE;                         // Disable USCI_A0 RX interrupt
+}
+
+/*\**********************************************************************************************************
+ *Function Description
+ * 	Prints out a stream of data from the uart line
+ *Parameters
+ *  String - Character array to be printed
+ *\**********************************************************************************************************/
+
+
+void USB_print(char *string){
+	while(*string){							// While there is more content
+		USB_transmit_byte(*string);				// Send one byte
+		string++;							// Load next byte
+	}
+}
+
+/*\**********************************************************************************************************
+ *Function Description
+ * 	Prints out a stream of data from two data collections
+ *Parameters
+ *  String1 - Character array to be printed
+ *  String2 - Character array to be printed
+ *\**********************************************************************************************************/
+
+
+void USB_print_status(unsigned char *string1,unsigned char *string2){
+	while(*string1){					    // While there is more content
+		USB_transmit_byte(*string1);			// Send one byte
+		string1++;							// Load next byte
+	}
+	while(*string2){						// While there is more content
+		UART_transmit_byte(*string2);			// Send one byte
+		string2++;							// Load next byte
+	}
+}
+
+
+/*\**********************************************************************************************************
+ *Function Description
+ * 	Prints out a stream of data from two data collections
+ *Parameters
+ *  String1 - Character array to be printed
+ *  Value - Character array to be printed
+ *\**********************************************************************************************************/
+
+
+
+void USB_print_value(char *string, int value){
+	char buffer[16];
+	itoa(value, buffer);
+	unsigned char *intArr = (unsigned char *)buffer;
+	while(*string){
+		USB_transmit_byte(*string);
+		string++;
+	}
+	while(*intArr){
+		USB_transmit_byte(*intArr);
+		intArr++;
+	}
+}
+
+
+//UART Interrupt Vector
+#pragma vector=USCI_A1_VECTOR
+__interrupt void USCI_A1_ISR(void){
+	if(UCA1IV == 0x02){						// Receive interrupt
+		USBBuff = UCA1RXBUF;				// Export to global variable
+		LPM0_EXIT;							// Exit low power mode
+	}
+}
+
+
 ///// END OF UART
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
