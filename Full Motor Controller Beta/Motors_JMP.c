@@ -21,10 +21,11 @@
  */
 
  
-#define REFRESH_RATE 52429
-#define DEADBAND 3932
-#define RANGE 1048
-#define RANGE_MARRON 10
+#define REFRESH_RATE 20972
+#define DEADBAND 1573
+#define RANGE 420
+
+#define RANGE_MARRON 8
 
 /***********************************************************************************
  *Function Description
@@ -36,34 +37,25 @@
 
 void MOTOR_full_setup(){
 	
-	P2DIR |= BIT4 + BIT5;								// Setup motor 1 & 2 pins as output for pwm
-	//P2OUT |= BIT4 + BIT5;								// Set as pwm output
-	P2SEL |= BIT4 + BIT5;								// Select timer module over gpio
+	P1DIR |= BIT2 + BIT3 + BIT4 + BIT5;								// Setup motor 1 & 2 pins as output for pwm
+	P1OUT |= BIT2 + BIT3 + BIT4 + BIT5;								// Set as pwm output
+	P1SEL |= BIT2 + BIT3 + BIT4 + BIT5;								// Select timer module over gpio
 	
-
-
-	P1DIR |= BIT4 + BIT3;								// Setup motor 3 & 4 pins as output for pwm
-	//P1OUT |= BIT4 + BIT3;
-	P1SEL |= BIT4 + BIT3;								// Select timer module over gpio
-
 
 	TA0CCR0 = REFRESH_RATE;								// Set the refresh rate of the pwm signal to 50Hz
-	TA2CCR0 = REFRESH_RATE;								// Set the refresh rate of the pwm signal to 50Hz
 	
-	TA2CCTL1 = OUTMOD_7;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
-	TA2CCR1 = REFRESH_RATE;                    	  	    // No ouptut signal
-	TA2CCTL2 = OUTMOD_7;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
-	TA2CCR2 = REFRESH_RATE;                     	    // No ouptut signal
-	TA0CCTL2 = OUTMOD_7;                       	        // Set Capture Compare Rregister 3 to reset/set mode
-	TA0CCR2 = REFRESH_RATE;                             // No ouptut signal
-	TA0CCTL3 = OUTMOD_7;		     		     		// Set Capture Compare Rregister 2 to reset/set mode
-	TA0CCR3 = REFRESH_RATE;					   			// No output signal
+	TA0CCTL1 = OUTMOD_7;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
+	TA0CCR1 = DEADBAND;                    	  	    // No ouptut signal
+	TA0CCTL2 = OUTMOD_7;            	         	    // Set Capture Compare Rregister 3 to reset/set mode
+	TA0CCR2 = DEADBAND;                     	    // No ouptut signal
+	TA0CCTL3 = OUTMOD_7;                       	        // Set Capture Compare Rregister 3 to reset/set mode
+	TA0CCR3 = DEADBAND;                             // No ouptut signal
+	TA0CCTL4 = OUTMOD_7;		     		     		// Set Capture Compare Rregister 2 to reset/set mode
+	TA0CCR4 = DEADBAND;					   			// No output signal
 
 
 	TA0R = 0;
-	TA2R = 0;
 	TA0CTL = TASSEL_2 + MC_1;     	  			// ACLK, up mode, clear T
-	TA2CTL = TASSEL_2 + MC_1;        		 	// ACLK, up mode, clear T
 
 }
 
@@ -76,16 +68,16 @@ void MOTOR_full_setup(){
 
 void MOTOR_half_setup(){
 	
-	P2DIR |= BIT4 + BIT5;								// Setup motor 1 & 2 pins as output for pwm
-	P2OUT |= BIT4 + BIT5;								// Set as pwm output
-	P2SEL |= BIT4 + BIT5;								// Select timer module over gpio
+	P1DIR |= BIT4 + BIT5;								// Setup motor 1 & 2 pins as output for pwm
+	P1OUT |= BIT4 + BIT5;								// Set as pwm output
+	P1SEL |= BIT4 + BIT5;								// Select timer module over gpio
 	
 	TA2CCR0 = REFRESH_RATE;								// Set the refresh rate of the pwm signal to 50Hz
 	
-	TA2CCTL1 = OUTMOD_7;            	             	// Set Capture Compare Rregister 3 to reset/set mode
-	TA2CCR1 = REFRESH_RATE;                       		// No ouptut signal
-	TA2CCTL2 = OUTMOD_7;            	             	// Set Capture Compare Rregister 3 to reset/set mode
-	TA2CCR2 = REFRESH_RATE;                       		// No ouptut signal
+	TA0CCTL4 = OUTMOD_7;            	             	// Set Capture Compare Rregister 3 to reset/set mode
+	TA0CCR4 = DEADBAND;                       		// No ouptut signal
+	TA0CCTL3 = OUTMOD_7;            	             	// Set Capture Compare Rregister 3 to reset/set mode
+	TA0CCR3 = DEADBAND;                       		// No ouptut signal
 	
 	TA0R = 0;
 	TA2CTL = TASSEL_2 + MC_1;       			// ACLK, up mode, clear T
@@ -104,19 +96,18 @@ void MOTOR_half_setup(){
 
 void MOTOR_speed(int speed, unsigned int motor){
 	if((speed < 101) && (speed > -101 ) && (motor < 6)){			// Verify correct parameters
-		unsigned int operations = (speed*RANGE_MARRON) + DEADBAND;		// Calculate appropriate duty cycle
+		unsigned long operations = (speed*RANGE)/100 + DEADBAND;		// Calculate appropriate duty cycle
 		TA0R = 0;													// Reset timer count
-		TA2R = 0;													// Reset timer count
 		switch (motor){												// Verify which motor to modify
-			case 1: TA2CCR2=operations;break;						// Change speed of motor 1
-			case 2: TA2CCR1=operations;break;						// Change speed of motor 2
-			case 3: TA0CCR3=operations;break;						// Change speed of motor 3
-			case 4: TA0CCR2=operations;break;						// Change speed of motor 4
+			case 1: TA0CCR4=operations;break;						// Change speed of motor 1
+			case 2: TA0CCR3=operations;break;						// Change speed of motor 2
+			case 3: TA0CCR2=operations;break;						// Change speed of motor 3
+			case 4: TA0CCR1=operations;break;						// Change speed of motor 4
 			case 5: 												// Change speed of all motors
-				TA2CCR1 = operations;
-				TA2CCR2 = operations;
+				TA0CCR1 = operations;
 				TA0CCR2 = operations;
 				TA0CCR3 = operations;
+				TA0CCR4 = operations;
 				break;
 			default: break;											// Do nothing
 		}
