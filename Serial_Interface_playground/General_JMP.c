@@ -245,7 +245,8 @@ void reverse(char s[]){
 
 
 void itoa(int n, char s[]){
-     int i, sign;
+
+	 int i, sign;
 
      if ((sign = n) < 0)  /* record sign */
          n = -n;          /* make n positive */

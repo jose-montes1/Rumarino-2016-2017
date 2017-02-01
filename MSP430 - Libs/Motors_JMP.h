@@ -8,6 +8,10 @@
 #ifndef MOTORS_JMP_H_
 #define MOTORS_JMP_H_
 
+#define ServoMS 655
+#define DEADBAND 1500
+#define RANGE 500
+#define ESCRANGE 400
 
 
 void MOTOR_full_setup();

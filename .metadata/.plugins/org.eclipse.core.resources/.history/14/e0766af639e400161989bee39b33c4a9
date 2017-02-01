@@ -1,0 +1,76 @@
+#include <msp430.h> 
+
+
+/*
+ * main.c
+ */
+
+//UART Interrupt Vector
+#pragma vector=USCI_A0_VECTOR
+__interrupt void USCI_A0_ISR(void){
+	if(UCA0IV == 0x02){						// Receive interrupt
+		while(!(UCA1IFG & UCTXIFG));
+		UCA1TXBUF = UCA0RXBUF;				// Export to global variable
+	}
+}
+
+
+void UART_transmit_byte(unsigned char byte){
+	while(!(UCA0IFG & UCTXIFG));
+	UCA0TXBUF = byte;
+}
+void UART_print(char *string){
+	while(*string){							// While there is more content
+		UART_transmit_byte(*string);				// Send one byte
+		string++;							// Load next byte
+	}
+}
+
+void main(void) {
+    WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+    P3SEL = BIT3+BIT4;                        // P3.4,5 = USCI_A0 TXD/RXD
+   // P3REN = BIT3;							// Set up resistor for BT module
+   // P3OUT = BIT3;							// Make it pull up
+   	UCA0CTL1 |= UCSWRST;                      // **Put state machine in reset**
+   	UCA0CTL1 |= UCSSEL_2;                     // CLK = SUBMAINCLK
+   	UCA0BR0 = 109;                           // 1.048MHz/9600=109 (see User's Guide)
+   	UCA0BR1 = 0x00;                          //
+   	UCA0MCTL |= UCBRS_2+UCBRF_0;             // Modulation UCBRSx=3, UCBRFx=0
+   	UCA0CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
+
+
+   	P4SEL = BIT5+BIT4;                        // P4.4,5 = USCI_A0 TXD/RXD
+    P3REN = BIT3;							// Set up resistor for BT module
+   	P3OUT = BIT3;							// Make it pull up
+   	UCA1CTL1 |= UCSWRST;                      // **Put state machine in reset**
+   	UCA1CTL1 |= UCSSEL_2;                     // CLK = SUBMAINCLK
+   	UCA1BR0 = 109;                           // 1.048MHz/9600=109 (see User's Guide)
+  	UCA1BR1 = 0x00;                          //
+    UCA1MCTL |= UCBRS_2+UCBRF_0;             // Modulation UCBRSx=3, UCBRFx=0
+    UCA1CTL1 &= ~UCSWRST;                     // **Initialize USCI state machine**
+
+
+    UCA0IE |= UCRXIE;                         // Enable USCI_A0 RX interrupt
+	_BIS_SR(GIE);
+
+
+	while(1){
+		LPM0;
+		UART_print("dss");
+	}
+	while(!(UCA1IFG & UCTXIFG));
+	UCA1TXBUF = 'T';				// Export to global variable
+
+	while(!(UCA1IFG & UCTXIFG));
+	UCA1TXBUF = 'E';				// Export to global variable
+
+	UART_print("#o0");
+
+	UART_print("#o1");
+	UART_print("#ot");
+	//while (1);
+
+	UART_print("#ob#o1#s");
+
+	while(1);
+}

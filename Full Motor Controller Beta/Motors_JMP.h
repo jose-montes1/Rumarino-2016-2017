@@ -8,8 +8,8 @@
 #ifndef MOTORS_JMP_H_
 #define MOTORS_JMP_H_
 
-
-
+#define MOTOR_CAP 40
+void MOTOR_ultra_setup();
 void MOTOR_full_setup();
 void MOTOR_half_setup();
 void MOTOR_speed(int speed, unsigned int motor);

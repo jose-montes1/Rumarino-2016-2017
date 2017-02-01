@@ -1,0 +1,27 @@
+
+**** Build of configuration Debug for project Pressure Sensor Beta ****
+
+"C:\\ti\\ccsv7\\utils\\bin\\gmake" -k -j 8 all -O 
+'Building target: Pressure Sensor Beta.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power="all" --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"Pressure Sensor Beta.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv7/ccs_base/msp430/include" -i"C:/Users/RathK/Dropbox/Rummarino/Rumarino-2016-2017/MSP430 - Libs" -i"C:/ti/ccsv7/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Pressure Sensor Beta_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "Pressure Sensor Beta.out" "./General_JMP.obj" "./Serial_JMP.obj" "./main.obj" "../lnk_msp430f5229.cmd"  -llibmath.a -llibc.a 
+<Linking>
+
+ undefined first referenced                                                                                
+  symbol       in file                                                                                     
+ --------- ----------------                                                                                
+ main      C:\ti\ccsv7\tools\compiler\ti-cgt-msp430_16.9.0.LTS\lib\rts430x_lc_rd_eabi.lib<boot_special.obj>
+remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+
+remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+
+>> Compilation failure
+makefile:144: recipe for target 'Pressure Sensor Beta.out' failed
+error #10234-D: unresolved symbols remain
+error #10010: errors encountered during linking; "Pressure Sensor Beta.out" not built
+gmake[1]: *** [Pressure Sensor Beta.out] Error 1
+gmake: *** [all] Error 2
+makefile:140: recipe for target 'all' failed
+
+**** Build Finished ****

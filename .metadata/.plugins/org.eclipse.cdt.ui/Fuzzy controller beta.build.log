@@ -1,0 +1,28 @@
+
+**** Build of configuration Debug for project Fuzzy controller beta ****
+
+"C:\\ti\\ccsv7\\utils\\bin\\gmake" -k -j 8 all -O 
+'Building file: ../main.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/include" --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="main.d"  "../main.c"
+"../main.c", line 73: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 104: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 117: remark #1530-D: (ULP 5.1) Detected divide operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 226: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 228: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 230: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 234: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 202: remark #1535-D: (ULP 8.1) variable "rule1" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../main.c", line 203: remark #1535-D: (ULP 8.1) variable "rule2" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+"../main.c", line 204: remark #1535-D: (ULP 8.1) variable "rule3" is used as a constant. Recommend declaring variable as either 'static const' or 'const'
+'Finished building: ../main.c'
+' '
+'Building target: Fuzzy controller beta.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"Fuzzy controller beta.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv7/ccs_base/msp430/include" -i"C:/ti/ccsv7/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Fuzzy controller beta_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "Fuzzy controller beta.out" "./main.obj" "../lnk_msp430f5529.cmd"  -llibmath.a -llibc.a 
+<Linking>
+remark #10371-D: (ULP 1.1) Detected no uses of low power mode state changing instructions
+'Finished building target: Fuzzy controller beta.out'
+' '
+
+**** Build Finished ****

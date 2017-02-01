@@ -1,0 +1,15 @@
+#include <msp430.h> 
+#include "../MSP430 - Libs/Serial_JMP.h"
+/*
+ * Created by Jose A. Montes Perez
+ * Algorithm taken from  MS5837-30BA datasheet
+ * http://www.mouser.com/ds/2/418/MS5837-30BA-736494.pdf
+ *
+ */
+unsigned int C1; //Pressure Sensitivity
+unsigned int C2
+int main(void) {
+    WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	
+	return 0;
+}

@@ -1,0 +1,35 @@
+#include <msp430.h> 
+#include "../MSP430 - Libs/Serial_JMP.h"
+/*
+ * Created by Jose A. Montes Perez
+ * Algorithm taken from  [1] MS5837-30BA datasheet - page 7
+ * [1] http://www.mouser.com/ds/2/418/MS5837-30BA-736494.pdf
+ *
+ */
+
+//Variable names taken straight from datasheet
+unsigned int C1; //Pressure Sensitivity
+unsigned int C2; //Pressure Offset
+unsigned int C3; //Temperature coefficient of pressure sensitivity
+unsigned int C4; //Temperature coefficient of pressure offset
+unsigned int C5; //Reference temperature
+unsigned int C6; //Temperature coefficient of the temperature
+
+unsigned long D1; //Digital pressure value
+unsigned long D2; //Digital temperature value
+
+signed long dT; //Difference between actual and reference value
+signed long TEMP; //Actual temperature
+
+signed long long OFF; //Offset actual temperature
+signed long long SENS; //Sensitivity at actual temperature
+signed long P; //Temperature compensated pressure
+
+
+
+
+int main(void) {
+    WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	
+	return 0;
+}

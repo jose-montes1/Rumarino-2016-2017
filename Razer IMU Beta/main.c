@@ -1,5 +1,6 @@
 #include <msp430.h> 
-#include "../MSP430\ -\ Libs/Serial_JMP.h"
+#include <stdlib.h>
+#include "Serial_JMP.h"
 
 
 
@@ -27,11 +28,17 @@
  */
 
 
-unsigned char *inputBuffer[36];
+char inBuffer[36];
 
-float acc[3];
-float mag[3];
-float gyr[3];
+char buff1[50];
+char buff2[50];
+char buff3[50];
+
+char *sensorTextInput[] = {buff1, buff2, buff3};
+
+float acc[3];	// Holds the accelerometer values in  x,y,z format
+float mag[3];	// Holds the magnetometer values in   x,y,z format
+float gyr[3];	// Holds the gyroscope values in      x,y,z format
 
 
 /****************************************************************************************************
@@ -52,9 +59,9 @@ void TIMER_setup(int milliseconds){
 	}
 }
 // Complimentary ISR to timer. This sends the request for the data to the IMU
-#p7ragma vector=TIMER0_A0_VECTOR
+#pragma vector=TIMER0_A0_VECTOR
 __interrupt void TIMER0_A0_ISR(void){
-	__bic_SR_register_on_exit(LPMO_bits);
+	__bic_SR_register_on_exit(LPM0_bits);
 }
 
 /****************************************************************************************************
@@ -71,18 +78,54 @@ __interrupt void TIMER0_A0_ISR(void){
 
 void calibration_mode(){
 
-	UART_print("#o0");			//Setup the razor for non-continuous stream
-	UART_print("#osrt");		//Set the output to raw data in text format
+	//UART_print("#o0");			//Setup the razor for non-continuous stream
+	UART_print("#o0");			//Setup the razor for continuous stream
+	UART_print("#oscb");		//Set the output to raw data in text format
 	//UART_print("#osrb");		//Set the output to raw data in binary format
-	UART_print("#f");
-	int i;
-	for(i = 0; i < 36; i++){
-		UART_receive_byte(inBuffer[i]);
-	}
-	USB_print(inBuffer);
+	
 }
 
+/****************************************************************************************************
+ * Function description:
+ * 	This function reads one frame of information and writes it into the global variables
+ *
+ ***************************************************************************************************/
 
+
+void calibration_read(){
+	//UART_print("#f");
+
+
+	int i;
+	/*
+	for(i = 0; i < 3; i++){
+		UART_receive_line(*(sensorTextInput+i));
+	}
+	char **buff = sensorTextInput;
+	USB_print(*buff++);
+	USB_print(*buff++);
+	USB_print(*buff);
+
+}*/
+
+	//Reading floating point values (RAW)
+	for(i = 0; i < 36; i++){
+		UART_receive_byte(&inBuffer[i]);
+	}
+	for(i = 0; i < 3; i++){
+		acc[i] = *(float *)&(inBuffer+4*i);
+		mag[i] = *(float *)&(inBuffer+4*i+12);
+		gyr[i] = *(float *)&(inBuffer+4*i+24);
+	}
+	unsigned char *buff;
+	snprintf(buff, 300, "acc: x-%f, y-%f, z-%f\n\rmag: x-%f, y-%f, z-%f\n\rgyr: x-%f, y-%f, z-%f", acc[0], acc[1], acc[2], mag[0], mag[1], mag[2], gyr[0], gyr[1], gyr[2]);
+	USB_print(buff);
+	
+
+}
+
+/*
+TODO - Test this area
 void read_sensors_mode(){
 
 	UART_print("#o0");			//Setup the razor for non-continuous stream
@@ -110,7 +153,7 @@ void read_angles_mode(){
 }
 
 
-/**********************************************{}****************************************************
+ **********************************************{}****************************************************
  * Current main configuration
  * This main is setup to control the output of the Razor IMU and read the raw values to
  * calibrate it.
@@ -122,10 +165,13 @@ void main(void) {
 	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
 	UART_setup(57600);
 	USB_setup(9600);
-	TIMER_setup(30);
+	__delay_cycles(50000);
+	TIMER_setup(300);
+	_BIS_SR(GIE);
+	calibration_mode();
 	while(1){
-		calibration_mode();
+		calibration_read();
 		__bis_SR_register(LPM0_bits);
 	}
 }
-`
+

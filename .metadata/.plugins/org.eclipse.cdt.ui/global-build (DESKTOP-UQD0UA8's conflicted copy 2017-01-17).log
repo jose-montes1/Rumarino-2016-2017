@@ -1,0 +1,32 @@
+
+**** Clean-only build of configuration Debug for project Pressure Sensor Beta ****
+
+make clean 
+
+make clean 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:\ti\ccsv6\ccs_base\common\bin;C:\ti\ccsv6\ccs_base\common\uscif;C:\ti\ccsv6\ccs_base\DebugServer\license;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk\bin;C:\Program Files\Java\jre\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;C:\Users\Rathk\AppData\Local\Microsoft\WindowsApps;]
+
+Error: Program "make" is not found in PATH
+
+PATH=[C:\ti\ccsv6\ccs_base\common\bin;C:\ti\ccsv6\ccs_base\common\uscif;C:\ti\ccsv6\ccs_base\DebugServer\license;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk\bin;C:\Program Files\Java\jre\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;C:\Users\Rathk\AppData\Local\Microsoft\WindowsApps;]
+
+**** Build Finished ****
+
+**** Build of configuration Debug for project Pressure Sensor Beta ****
+
+make all 
+
+make all 
+Cannot run program "make": Launching failed
+
+Error: Program "make" not found in PATH
+PATH=[C:\ti\ccsv6\ccs_base\common\bin;C:\ti\ccsv6\ccs_base\common\uscif;C:\ti\ccsv6\ccs_base\DebugServer\license;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk\bin;C:\Program Files\Java\jre\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;C:\Users\Rathk\AppData\Local\Microsoft\WindowsApps;]
+
+Error: Program "make" is not found in PATH
+
+PATH=[C:\ti\ccsv6\ccs_base\common\bin;C:\ti\ccsv6\ccs_base\common\uscif;C:\ti\ccsv6\ccs_base\DebugServer\license;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\Java\jdk\bin;C:\Program Files\Java\jre\bin;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;%SYSTEMROOT%\System32\WindowsPowerShell\v1.0\;C:\Users\Rathk\AppData\Local\Microsoft\WindowsApps;]
+
+**** Build Finished ****

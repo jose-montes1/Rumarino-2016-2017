@@ -1,0 +1,30 @@
+
+**** Build of configuration Debug for project Razer IMU Beta ****
+
+"C:\\ti\\ccsv7\\utils\\bin\\gmake" -k all 
+'Building file: ../main.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="main.d"  "../main.c"
+
+>> Compilation failure
+subdir_rules.mk:30: recipe for target 'main.obj' failed
+"../main.c", line 55: remark #1530-D: (ULP 5.1) Detected divide operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 116: error #160: expression must be an lvalue or a function designator
+"../main.c", line 117: error #160: expression must be an lvalue or a function designator
+"../main.c", line 118: error #160: expression must be an lvalue or a function designator
+"../main.c", line 121: warning #225-D: function "snprintf" declared implicitly
+"../main.c", line 121: warning #551-D: variable "buff" is used before its value is set
+"../main.c", line 122: warning #169-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+"../main.c", line 112: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 113: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../main.c", line 115: remark #1544-D: (ULP 13.1) Detected loop counting up. Recommend loops count down as detecting zeros is easier
+"../main.c", line 116: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../main.c", line 117: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../main.c", line 118: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../main.c", line 121: remark #1532-D: (ULP 5.3) Detected snprintf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../main.c", line 168: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+3 errors detected in the compilation of "../main.c".
+gmake: *** [main.obj] Error 1
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****

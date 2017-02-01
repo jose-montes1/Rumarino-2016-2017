@@ -1,0 +1,1 @@
+"./General_JMP.obj" "./Serial_JMP.obj" "./main.bak.obj" "./main.obj" "../lnk_msp430f5529.cmd" -llibmath.a -llibc.a 
