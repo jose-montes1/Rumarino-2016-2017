@@ -1,6 +1,9 @@
 #include <msp430.h> 
 #include "Serial_JMPv2.0.h"
 #include "typecast.h"
+#include "MS5837-30BA.h"
+#include "Motors_JMP.h"
+#include "General_JMP.h"
 /*
  * main.c
  * General skeleton for controller implementation
@@ -9,12 +12,15 @@
  *
  */
 
+#define FEET_TO_PWM 6.25
+
+
 
 //Struct utilized to keep tract of the conditions of the controller
 struct serialConditions {
 	uint8 depthControllerEnabled : 1;		//Determines whether the depth controller is enabled
 	uint8 alignControllerEnabled : 1;		//Determines whether the align controller is enabled
-	uint8 forwardsDeadreckoning : 2;		//Determines if you go forwards by time or not
+	uint8 forwardsDeadreckoning : 1;		//Determines if you go forwards by time or not
 
 	uint8 systemRunning : 1;				//Determines whether the system starts or not
 	// 0 - not running | 1 - running
@@ -36,6 +42,11 @@ struct serialConditions {
 };
 
 
+void forward(unsigned int time, int speed, unsigned char *done){
+	MOTOR_speed(speed, H_MOTORS);	//Sends speed to front two motors
+	timeExceed(time, done);
+}
+
 
 //Use this to output information about the current stage
 void printInputFeedback(int operatorNumber, char command){
@@ -53,17 +64,43 @@ void printInputFeedback(int operatorNumber, char command){
 #define invalidCommand() conditions.validCommand = 0; conditions.clearInput = 1
 
 
-
-
-
 int main(void) {
 	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+
+	/***** SETUP AREA *****/
+	//Initialize modules
 	USB_setup(9600);
+	I2C_setup(400000);
+	MOTOR_ultra_setup();
 	_BIS_SR(GIE);
+	PRESSURE_calibrate();
+
+
+	/***** Variable Declarations *****/
+	//Motor Variables
+	int16 v_motors;
+	int16 right_motor;
+	int16 left_motor;
+
+
+	//Controller variables
+	int depth_gain = 0;
+	float reference = 0;
+	float actual_depth_bars = 0;
+	float actual_depth_milibars = 0;
+	float actual_depth_feet = 0;
+	float error = 0;
+	float output = 0;
+	long actual_depth_pwm;
+
+	//Forwards
+	unsigned char tiemDone;
+
+
 
 	struct serialConditions conditions = {0,0,0,0,1,0,0,0,0,1};
 
-	/* Controller shit */
+
 
 
 	int8 commands[4];	//Command buffer
@@ -84,6 +121,7 @@ int main(void) {
 	commands[0] = 0;
 	USB_getchar(&commands[0], 'a');
 	conditions.clearInput = 1;
+
 	while(1){
 
 		/* Enter command management /
@@ -109,12 +147,13 @@ int main(void) {
 
 				/* Depth controller options
 				 * 0-9 Give set point corresponding to feet
-				 * q - Place the set point at 11 feet
-				 * w - Place the set point at 12 feet
-				 * e - Place the set point at 13 feet
-				 * r - Place the set point at 14 feet
-				 * t - Place the set point at 15 feet
-				 * y - Place the set point at 12 feet
+				 * q - Place the set point at 10 feet
+				 * w - Place the set point at 11 feet
+				 * e - Place the set point at 12 feet
+				 * r - Place the set point at 13 feet
+				 * t - Place the set point at 14 feet
+				 * y - Place the set point at 15 feet
+				 * u - Place the set point at 16 feet
 				 *
 				 * g - set the gain of the controller - requires other operand
 				 *
@@ -133,38 +172,42 @@ int main(void) {
 
 					/* Set point and enable controller commands */
 					if(commands[1] >= '0' && commands[1] <= '9'){
-						//TODO - place set point and turn on controller
+						reference = FEET_TO_PWM*(commands[1] - '0');
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 1;
 					}else if(commands[1] == 'q'){
-						//TODO - place set point and turn on controller
+						reference = FEET_TO_PWM*(10);
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 1;
 					}else if(commands[1] == 'w'){
-						//TODO - place set point and turn on controller
+						reference = FEET_TO_PWM*(11);
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 1;
 					}else if(commands[1] == 'e'){
-						//TODO - place set point and turn on controller
+						reference = FEET_TO_PWM*(12);
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 1;
 					}else if(commands[1] == 'r'){
-						//TODO - place set point and turn on controller
+						reference = FEET_TO_PWM*(13);
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 1;
 					}else if(commands[1] == 't'){
-						//TODO - place set point and turn on controller
+						reference = FEET_TO_PWM*(14);
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 1;
 					}else if(commands[1] == 'y'){
-						//TODO - place set point and turn on controller
+						reference = FEET_TO_PWM*(15);
+						conditions.clearInput = 1;
+						conditions.depthControllerEnabled = 1;
+					}else if(commands[1] == 'u'){
+						reference = FEET_TO_PWM*(16);
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 1;
 					}
 
 					/* Turn of controller command */
 					else if(commands[1] == 'x'){
-						//TODO - turn off motors and turn off controller
+						MOTOR_speed(0, V_MOTORS);
 						conditions.clearInput = 1;
 						conditions.depthControllerEnabled = 0;
 					}
@@ -183,7 +226,7 @@ int main(void) {
 							}
 							/*Verify proper command */
 							if(commands[2] >= '0' && commands[2] <= '9'){
-								//TODO - set the gain to the value at command
+								depth_gain = commands[2] - '0' + 1;
 								conditions.clearInput = 1;
 							}
 							/* Invalid third Command */
@@ -222,7 +265,9 @@ int main(void) {
 
 					/* Set the time variable and go on */
 					if(commands[1] >= '0' && commands[1] <= '9'){
-						//TODO - set the time variable
+						forwards(commands[1]-'0' + 1, MOTOR_CAP, &tiemDone);
+						left_motor = 0;
+						right_motor = 0;
 						conditions.forwardsDeadreckoning = 1;
 						conditions.clearInput = 1;
 					}
@@ -249,8 +294,10 @@ int main(void) {
 
 					/* Set the time variable and go on */
 					if(commands[1] >= '0' && commands[1] <= '9'){
-						//TODO - set the time variable
-						conditions.forwardsDeadreckoning = 2;
+						forwards(commands[0] -'0'+1, -1*MOTOR_CAP, &tiemDone);
+						left_motor = 0;
+						right_motor = 0;
+						conditions.forwardsDeadreckoning = 1;
 						conditions.clearInput = 1;
 					}
 					/*Invalid second command */
@@ -263,39 +310,39 @@ int main(void) {
 
 			/* Manual control operation - go forwards - if tilting stop*/
 			else if(commands[0] == 'w'){
-				/* TODO - if(m5_speed != m6_speed){
-					m5_speed = 0;
-					m6_speed = 0;
-				}if(m5_speed < MOTOR_CAP){
-					m5_speed += 5;
-					m6_speed += 5;
-				}*/
+				if(right_motor != left_motor){
+					right_motor = 0;
+					left_motor = 0;
+				}if(right_motor < MOTOR_CAP){
+					right_motor += 5;
+					left_motor += 5;
+				}
 
 				/* Manual control operation */
 			}else if(commands[0] == 's'){
-				/*TODO	if(m5_speed != m6_speed){
-					m5_speed = 0;
-					m6_speed = 0;
-				}if(m5_speed > -1*MOTOR_CAP){
-					m5_speed -= 5;
-					m6_speed -= 5;
-				}*/
+				if(right_motor != left_motor){
+					right_motor = 0;
+					left_motor = 0;
+				}if(right_motor > -1*MOTOR_CAP){
+					right_motor -= 5;
+					left_motor -= 5;
+				}
 			}else if(commands[0] == 'a'){
-				/* TODO	if(m5_speed == m6_speed){
-					m5_speed = 0;
-					m6_speed = 0;
-				}if(m5_speed < MOTOR_CAP){
-					m5_speed += 5;
-					m6_speed -= 5;
-				}*/
+				if(right_motor == left_motor){
+					right_motor = 0;
+					left_motor = 0;
+				}if(right_motor < MOTOR_CAP){
+					right_motor += 5;
+					left_motor -= 5;
+				}
 			}else if(commands[0] == 'd'){
-				/*TODO if(m5_speed == m6_speed){
-					m5_speed = 0;
-					m6_speed = 0;
-				}if(m6_speed < MOTOR_CAP){
-					m5_speed -= 5;
-					m6_speed += 5;
-				}*/
+				if(right_motor == left_motor){
+					right_motor = 0;
+					left_motor = 0;
+				}if(left_motor < MOTOR_CAP){
+					right_motor -= 5;
+					left_motor += 5;
+				}
 			}
 
 			/* Change the input setting to User mode */
@@ -314,7 +361,8 @@ int main(void) {
 
 			/* Halt everything */
 			else if(commands[0] == 'x'){
-				//TODO - turn off motors
+				MOTOR_speed(0,V_MOTORS);
+				MOTOR_speed(0,H_MOTORS);
 				conditions.alignControllerEnabled = 0;
 				conditions.depthControllerEnabled = 0;
 				conditions.systemRunning = 0;
@@ -324,7 +372,9 @@ int main(void) {
 			else{
 				invalidCommand();
 			}
-		}if(commands[0] != 0 && !conditions.systemRunning){
+		}
+
+		if(commands[0] != 0 && !conditions.systemRunning){
 			if(commands[0] == 's'){
 				USB_println("Restarting the system");
 				conditions.systemRunning = 1;
@@ -336,9 +386,9 @@ int main(void) {
 		if(conditions.clearInput){
 
 			if(conditions.validCommand){
-				USB_println("Entered a valid command");
+				USB_println("Entered valid command");
 			}else{
-				USB_println("Entered a invalid command");
+				USB_println("Entered invalid command");
 			}
 			conditions.validCommand = 1;					//Asume a valid command
 
@@ -359,24 +409,47 @@ int main(void) {
 
 			/* Depth controller section*/
 			if(conditions.depthControllerEnabled){
-				USB_println("Depth controller working");
-				__delay_cycles(20000);
+				actual_depth_bars = (float)33.4552565551477*(pressure);       // convert bars to milibars
+				actual_depth_milibars = (float)(actual_depth_bars/10000); //convert milibars to feet
+				actual_depth_feet = (float)(actual_depth_milibars - 29);  // calibrate depending on altitude above sea
+				actual_depth_pwm = (actual_depth_feet*6.25);
+				error = (reference - actual_depth_pwm);      //calculate error
+				output = controller_gain*error;
+				if(output > MOTOR_CAP){
+					v_motors = MOTOR_CAP;
+				}else if(output < MOTOR_CAP){
+					v_motors = -1*MOTOR_CAP;
+				}else{
+					v_motor = MOTOR_CAP;
+				}
+				MOTOR_speed(v_motor, V_MOTORS);
 			}
 
 			/* Align Controller section*/
-			if(conditions.depthControllerEnabled){
+			if(conditions.alignControllerEnabled){
 			}
 
 			/* WASD control section*/
 			if(!conditions.forwardsDeadreckoning){
+				MOTOR_speed(left_motor, L_MOTOR);
+				MOTOR_speed(right_motor, R_MOTOR);
 			}
 
 			/* Forwards and backwards section */
 			if(conditions.forwardsDeadreckoning){
+				if(tiemDone){
+					conditions.forwardsDeadreckoning = 0;
+				}
 			}
 
 			/* Print usage to user */
 			if (conditions.terminalIO){
+				USB_print_value("set point is: ", reference);
+				USB_print_value("  pressure is: ", pressure);
+				USB_print_float("  depth is: ", actual_depth_bars);
+				USB_print_float("  depth is: ", actual_depth_milibars);
+				USB_print_float("  depth is: ", actual_depth_feet);
+				USB_print_value("  vert motors: ", v_motors);
 			}
 
 			/* Prints usage to the script */

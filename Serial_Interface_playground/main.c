@@ -1,5 +1,5 @@
 #include <msp430.h> 
-#include "Serial_JMP.h"
+#include "Serial_JMPv2.0.h"
 #include <stdlib.h>
 /*
  * main.c
@@ -15,17 +15,18 @@ void main(void) {
 	char cahr;
 	char *command;
 	command = (char *) malloc(50);
-	USB_getchar(&cahr, 'a');
+
 	while(1){
+		USB_getchar(&cahr, 'b');
 		USB_print("Received: ");
 		USB_putchar(cahr);
 		USB_println(" ");
 		if(cahr == 'g'){
-			USB_print("Testing stop: ");
+			USB_print("Testing readline: ");
 			USB_getline_b(command);
 			USB_print(command);
 			cahr = 0;
 		}
-		__delay_cycles(50000);
+		//__delay_cycles(50000);
 	}
 }
