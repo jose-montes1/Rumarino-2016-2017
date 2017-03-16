@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;Depth Controller Beta - Sampling v0.1/Serial_JMP.c&apos; to &apos;Serial_JMPv1.0.c&apos;" description="Rename resource &apos;Serial_JMP.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Serial_JMP.c" name="Serial_JMPv1.0.c" stamp="1488512296443" updateReferences="true"/>&#x0A;<refactoring comment="Rename resource &apos;Depth Controller Beta - Sampling v0.1/Serial_JMPv1.0.c&apos; to &apos;Serial_JMP.c&apos;" description="Rename resource &apos;Serial_JMPv1.0.c&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Serial_JMPv1.0.c" name="Serial_JMP.c" stamp="1488512313181" updateReferences="true"/>
+</session>

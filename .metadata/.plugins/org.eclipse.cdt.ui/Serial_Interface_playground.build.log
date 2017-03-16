@@ -1,21 +1,79 @@
 
 **** Build of configuration Debug for project Serial_Interface_playground ****
 
-"C:\\ti\\ccsv7\\utils\\bin\\gmake" -k all 
-'Building file: ../main.c'
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
+'Building file: ../MSP430 - Libs/Sampling_JMP.c'
 'Invoking: MSP430 Compiler'
-"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="main.d"  "../main.c"
-"../main.c", line 22: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
-'Finished building: ../main.c'
-' '
-'Building target: Serial_Interface_playground.out'
-'Invoking: MSP430 Linker'
-"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal -z -m"Serial_Interface_playground.map" --stack_size=160 --heap_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv7/ccs_base/msp430/include" -i"C:/ti/ccsv7/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.9.0.LTS/include" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="Serial_Interface_playground_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "Serial_Interface_playground.out" "./General_JMP.obj" "./Serial_JMP.obj" "./main.obj" "../lnk_msp430f5529.cmd"  -llibmath.a -llibc.a 
-<Linking>
-remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
-'Finished building target: Serial_Interface_playground.out'
-' '
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Sampling_JMP.d" --obj_directory="MSP430 - Libs"  "../MSP430 - Libs/Sampling_JMP.c"
+MSP430 - Libs/subdir_rules.mk:21: recipe for target 'MSP430 - Libs/Sampling_JMP.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Sampling_JMP.d" "--obj_directory=MSP430 - Libs" "../MSP430 - Libs/Sampling_JMP.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Sampling_JMP.obj] Error 87
+'Building file: ../MSP430 - Libs/main.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/main.d" --obj_directory="MSP430 - Libs"  "../MSP430 - Libs/main.c"
+MSP430 - Libs/subdir_rules.mk:35: recipe for target 'MSP430 - Libs/main.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/main.d" "--obj_directory=MSP430 - Libs" "../MSP430 - Libs/main.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/main.obj] Error 87
+'Building file: ../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/Serial_JMP.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/Serial_JMP.d" --obj_directory="MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial"  "../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/Serial_JMP.c"
+MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/subdir_rules.mk:7: recipe for target 'MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/Serial_JMP.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/Serial_JMP.d" "--obj_directory=MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial" "../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/Serial_JMP.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Legacy/Obsolete 2-feb-17/Old Serial/Serial_JMP.obj] Error 87
+'Building file: ../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/MS5837-30BA.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/MS5837-30BA.d" --obj_directory="MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers"  "../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/MS5837-30BA.c"
+MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/subdir_rules.mk:7: recipe for target 'MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/MS5837-30BA.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/MS5837-30BA.d" "--obj_directory=MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers" "../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/MS5837-30BA.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/MS5837-30BA.obj] Error 87
+'Building file: ../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/Razer_AHRS.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/Razer_AHRS.d" --obj_directory="MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers"  "../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/Razer_AHRS.c"
+MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/subdir_rules.mk:14: recipe for target 'MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/Razer_AHRS.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/Razer_AHRS.d" "--obj_directory=MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers" "../MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/Razer_AHRS.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Legacy/Obsolete 2-feb-17/Sensor Drivers/Razer_AHRS.obj] Error 87
+'Building file: ../MSP430 - Libs/Sensor Drivers/MS5837-30BA.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Sensor Drivers/MS5837-30BA.d" --obj_directory="MSP430 - Libs/Sensor Drivers"  "../MSP430 - Libs/Sensor Drivers/MS5837-30BA.c"
+MSP430 - Libs/Sensor Drivers/subdir_rules.mk:7: recipe for target 'MSP430 - Libs/Sensor Drivers/MS5837-30BA.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Sensor Drivers/MS5837-30BA.d" "--obj_directory=MSP430 - Libs/Sensor Drivers" "../MSP430 - Libs/Sensor Drivers/MS5837-30BA.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Sensor Drivers/MS5837-30BA.obj] Error 87
+'Building file: ../MSP430 - Libs/Sensor Drivers/Razer_AHRS.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Sensor Drivers/Razer_AHRS.d" --obj_directory="MSP430 - Libs/Sensor Drivers"  "../MSP430 - Libs/Sensor Drivers/Razer_AHRS.c"
+MSP430 - Libs/Sensor Drivers/subdir_rules.mk:14: recipe for target 'MSP430 - Libs/Sensor Drivers/Razer_AHRS.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Sensor Drivers/Razer_AHRS.d" "--obj_directory=MSP430 - Libs/Sensor Drivers" "../MSP430 - Libs/Sensor Drivers/Razer_AHRS.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Sensor Drivers/Razer_AHRS.obj] Error 87
+'Building file: ../MSP430 - Libs/Testing/OLD serial/Serial_JMP.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Testing/OLD serial/Serial_JMP.d" --obj_directory="MSP430 - Libs/Testing/OLD serial"  "../MSP430 - Libs/Testing/OLD serial/Serial_JMP.c"
+MSP430 - Libs/Testing/OLD serial/subdir_rules.mk:7: recipe for target 'MSP430 - Libs/Testing/OLD serial/Serial_JMP.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Testing/OLD serial/Serial_JMP.d" "--obj_directory=MSP430 - Libs/Testing/OLD serial" "../MSP430 - Libs/Testing/OLD serial/Serial_JMP.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Testing/OLD serial/Serial_JMP.obj] Error 87
+'Building file: ../MSP430 - Libs/Testing/Serial_JMPv2.0.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile --preproc_dependency="MSP430 - Libs/Testing/Serial_JMPv2.0.d" --obj_directory="MSP430 - Libs/Testing"  "../MSP430 - Libs/Testing/Serial_JMPv2.0.c"
+MSP430 - Libs/Testing/subdir_rules.mk:7: recipe for target 'MSP430 - Libs/Testing/Serial_JMPv2.0.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all -g --define=__MSP430F5529__ --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal --preproc_with_compile "--preproc_dependency=MSP430 - Libs/Testing/Serial_JMPv2.0.d" "--obj_directory=MSP430 - Libs/Testing" "../MSP430 - Libs/Testing/Serial_JMPv2.0.c", ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake: *** [MSP430 - Libs/Testing/Serial_JMPv2.0.obj] Error 87
+gmake: Target 'all' not remade because of errors.
 
 **** Build Finished ****

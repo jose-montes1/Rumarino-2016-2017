@@ -1,7 +1,7 @@
 
 **** Build of configuration Debug for project Full Motor Controller Beta ****
 
-"C:\\ti\\ccsv7\\utils\\bin\\gmake" -k all 
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k all 
 gmake: Nothing to be done for 'all'.
 
 **** Build Finished ****

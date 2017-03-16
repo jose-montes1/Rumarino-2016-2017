@@ -33,4 +33,9 @@ void I2C_write(unsigned char slaveAddress, unsigned char registerAddress, unsign
 void I2C_read(unsigned char slaveAddress, unsigned char registerAddress, unsigned char *readDestination, unsigned int length);
 __interrupt void USCI_B0_ISR(void);
 
+void BT_timeout_setup(int miliseconds);
+void BT_restart_timeout();
+void BT_stop_timeout();
+__interrupt void TIMER1_A0_ISR(void);
+
 #endif /* SERIAL_JMP_H_ */

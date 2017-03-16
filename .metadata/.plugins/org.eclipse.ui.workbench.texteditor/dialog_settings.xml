@@ -2,31 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="UART" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="100"/>
-			<item value="gravity"/>
-			<item value="signed long "/>
-			<item value="unsigned long "/>
-			<item value="unsigned int "/>
-			<item value="unsinged int "/>
+			<item value="uart"/>
+			<item value="lol"/>
+			<item value="m6"/>
+			<item value="m5"/>
+			<item value="m1"/>
+			<item value="delay"/>
+			<item value="UCA0"/>
+			<item value="UART"/>
 		</list>
 		<list key="replacehistory">
-			<item value="int32 "/>
-			<item value="uint32 "/>
-			<item value="uint32"/>
-			<item value="uint16 "/>
+			<item value="m2"/>
+			<item value="m1"/>
+			<item value="delayC"/>
+			<item value="UCA1"/>
+			<item value="USB"/>
+			<item value="RAZOR"/>
+			<item value="UARTBuff"/>
+			<item value="TA1"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="305" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="444" key="DIALOG_HEIGHT"/>
-		<item value="403" key="DIALOG_Y_ORIGIN"/>
-		<item value="496" key="DIALOG_X_ORIGIN"/>
+		<item value="470" key="DIALOG_HEIGHT"/>
+		<item value="368" key="DIALOG_Y_ORIGIN"/>
+		<item value="983" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>

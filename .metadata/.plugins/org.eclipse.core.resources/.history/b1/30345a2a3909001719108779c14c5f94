@@ -1,0 +1,188 @@
+#include <msp430.h> 
+#include "types.h"
+
+
+/*
+ * main.c
+ */
+
+
+//Struct utilized to keep tract of the conditions of the controller
+struct serialConditions {
+	uint8 depthControllerEnabled : 1;		//Determines whether the depth controller is enabled
+	uint8 alignControllerEnabled : 1;		//Determines whether the align controller is enabled
+	uint8 systemStart : 1;					//Determines whether the system starts or not
+	uint8 systemInput : 1;					//Determines if the system receives input from the script or from the user
+	/* 0 - input from terminal | 1 - input from script */
+	uint8 scriptControl : 1;				//Determines if you can use the wasd keys to control the orientation - no manual depth control
+	/* 0 - manual control | 1 - control from script */
+	uint8 clearInput : 1; 					//Determines when to clear inputs (complete or invalid command)
+	uint8 firstCommand : 1;					//Determines if it is the first input
+	uint8 secondCommand : 1;				//Determines if it is the second command
+	uint8 thirdCommand : 1;					//Determines if it is the third command
+
+	uint8 validCommand : 1;					//Determines whether it is a valid command or not
+
+	uint8 printFeedbackFrame : 1;			//Determines when to print an output frame from the status
+	uint8 printContinousFrames : 1;			// TODO - maybe
+	uint8 printStatusFrame : 1;				//Determines when to print a system status frame
+};
+
+
+
+//Use this to output information about the current stage
+void printInputFeedback(int operatorNumber, char command){
+	switch(operatorNumber){
+	case 1: USB_print("Entered first operator: "); break;
+	case 2: USB_print("Entered second operator: "); break;
+	case 3: USB_print("Entered third operator: "); break;
+	default: break;
+	}
+	USB_putchar(command[0]);
+	USB_println(" ");
+}
+
+
+
+
+
+
+
+int main(void) {
+	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	USB_setup(9600);
+
+
+	struct serialConditions conditions = {0,0,0,0,0};
+
+	/* Controller shit */
+
+
+	int8 commands[3];	//Command buffer
+	commands[0] = 0;
+	commands[1] = 0;
+	commands[2] = 0;
+
+
+	while(!conditions.systemStart){ 							//Verify that the system is enabled
+		USB_println("Getting command from the controller");		//Print usage to user
+		USB_getchar(commands, 'b');								//Get input from user in blocking mode
+		if(*commands == 's'){									//Error check input
+			conditions.systemStart = 1;
+		}
+	}
+
+	while(1){
+		if(command[0] != 0){
+			/* Enter command management /
+			 * o - depth controller - required more operands
+			 * a - alignment controller - requires more operands
+			 *
+			 *
+			 *
+			 */
+
+
+
+			/* Print feedback frame and set operator to second command */
+			if(conditions.firstCommand){				//Verify so you only print once (to avoid spam)
+				printInputFeedback(1,commands[0]);		//Print feedback to the user
+				USB_getchar(commands[1], 'a');			//Set UART receive to next value
+				conditions.firstCommand = 0;			//Disable so you don't enter this if anymore
+			}
+
+
+			/* Enter depth controller Commands */
+			if(command[0] == 'o'){
+				/* Depth controller options
+				 * 0-9 Give set point corresponding to feet
+				 * q - Place the set point at 11 feet
+				 * w - Place the set point at 12 feet
+				 * e - Place the set point at 13 feet
+				 * r - Place the set point at 14 feet
+				 * t - Place the set point at 15 feet
+				 * y - Place the set point at 12 feet
+				 *
+				 * g - set the gain of the controller - requires other operand
+				 *
+				 * x - exit vertical controller and resets vertical motors
+				 *
+				 */
+
+				/* if command arrives */
+				if(command[1] != 0){
+					/* Print feedback frame and set operator to second command */
+					if(conditions.secondCommand){				//Verify so you only print once (to avoid spam)
+						printInputFeedback(2,commands[1]);		//Print feedback to the user
+						USB_getchar(commands[2], 'a');			//Set UART receive to next value
+						conditions.secondCommand = 0;			//Disable so you don't enter this if anymore
+					}
+
+					if(commmand >= '0' && command <= '9'){
+						//TODO - place set point
+					}else if(command == 'q'){
+						//TODO - place set point
+					}else if(command == 'w'){
+						//TODO - place set point
+					}else if(command == 'e'){
+						//TODO - place set point
+					}else if(command == 'r'){
+						//TODO - place set point
+					}else if(command == 't'){
+						//TODO - place set point
+					}else if(command == 'y'){
+						//TODO - place set point
+					}
+
+					else if(command == 'x'){
+
+					}
+
+
+
+
+				}
+
+
+
+
+			}else if(command[0] == 'a'){
+
+			}else{
+				conditions.validCommand = 0;
+				conditions.clearInput;
+			}
+		}
+
+
+
+
+	}
+
+
+	if(conditions.clearInput){
+
+		if(conditions.validCommand){
+			USB_println("Entered a valid command");
+		}else{
+			USB_println("Entered a invalid command");
+		}
+		conditions.validCommand = 1;
+
+		commands[0] = 0;
+		commands[1] = 1;
+		commands[2] = 3;
+
+		conditions.firstCommand = 1;
+		conditions.secondCommand = 1;
+		conditions.thirdCommand  = 1;
+
+		USB_getchar(&command, 'a');
+		conditions.clearInput = 0;
+	}
+
+
+
+
+	return 0;
+}

@@ -1,0 +1,14 @@
+
+**** Build of configuration Debug for project Razor IMU Beta v0.1 ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k -j 8 all -O 
+'Building file: ../Razer_AHRS.c'
+'Invoking: MSP430 Compiler'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="/msp430/include" --include_path="/include" --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="Razer_AHRS.d"  "../Razer_AHRS.c"
+subdir_rules.mk:14: recipe for target 'Razer_AHRS.obj' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path=/msp430/include --include_path=/include --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency=Razer_AHRS.d ../Razer_AHRS.c, ...) failed.
+make (e=87): The parameter is incorrect.
+gmake: *** [Razer_AHRS.obj] Error 87
+gmake: Target 'all' not remade because of errors.
+
+**** Build Finished ****

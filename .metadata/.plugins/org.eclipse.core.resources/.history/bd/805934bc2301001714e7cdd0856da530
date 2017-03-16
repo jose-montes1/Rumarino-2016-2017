@@ -1,0 +1,31 @@
+#include <msp430.h> 
+#include "Serial_JMP.h"
+#include <stdlib.h>
+/*
+ * main.c
+ */
+
+//UART Interrupt Vector
+
+void main(void) {
+    WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+
+    USB_setup(9600);
+	_BIS_SR(GIE);
+	char cahr;
+	char *command;
+	command = (char *) malloc(50);
+	USB_receive_non_blocking(&cahr);
+
+	while(1){
+		USB_print("Received: ");
+		USB_transmit_byte(&cahr);
+		USB_println(" ");
+		if(*command == 'g'){
+			USB_print("Testing stop: ");
+			USB_receive_line(command);
+			USB_print(command);
+		}
+		__delay_cycles(50000);
+	}
+}
