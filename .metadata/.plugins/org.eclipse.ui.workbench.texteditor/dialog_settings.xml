@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="UART" key="selection"/>
+		<item value="left_motor" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="m6_speed"/>
+			<item value="right_speed"/>
+			<item value="m5"/>
 			<item value="uart"/>
 			<item value="lol"/>
 			<item value="m6"/>
-			<item value="m5"/>
 			<item value="m1"/>
 			<item value="delay"/>
-			<item value="UCA0"/>
-			<item value="UART"/>
 		</list>
 		<list key="replacehistory">
+			<item value="left_motor"/>
+			<item value="right_motor"/>
+			<item value="right"/>
 			<item value="m2"/>
 			<item value="m1"/>
 			<item value="delayC"/>
 			<item value="UCA1"/>
 			<item value="USB"/>
-			<item value="RAZOR"/>
-			<item value="UARTBuff"/>
-			<item value="TA1"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="305" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="470" key="DIALOG_HEIGHT"/>
-		<item value="368" key="DIALOG_Y_ORIGIN"/>
-		<item value="983" key="DIALOG_X_ORIGIN"/>
+		<item value="464" key="DIALOG_HEIGHT"/>
+		<item value="271" key="DIALOG_Y_ORIGIN"/>
+		<item value="1231" key="DIALOG_X_ORIGIN"/>
 	</section>
 </section>

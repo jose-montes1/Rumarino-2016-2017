@@ -1,5 +1,5 @@
 #include <msp430.h> 
-#include "Serial_JMPv2.0.h"
+#include "Serial_JMPv2.1.h"
 #include "Razor_AHRS.h"
 #include "General_JMP.h"
 
@@ -27,23 +27,21 @@
  */
 
 
+
 void main(void) {
 	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
 	RAZOR_sngl_setup();
 	RAZOR_out_angles();
 	_BIS_SR(GIE);
-	volatile float n_yaw,n_pitch,n_roll, lol;
-	lol = 0;
-	RAZOR_refresh_value();
-	n_yaw = yaw;
-	n_pitch = pitch;
-	n_roll = roll;
+
+
+	float n_yaw;
+	RAZOR_get_yaw(&n_yaw);
+
 	while(1){
 		RAZOR_refresh_value();
-		lol = n_yaw + n_pitch + n_roll;
-		n_yaw = yaw;
-		n_pitch = pitch;
-		n_roll = roll;
+		RAZOR_get_yaw(&n_yaw);
+		USB_print_float("Yaw: ", n_yaw);
 		__delay_cycles(20000);
 	}
 }
