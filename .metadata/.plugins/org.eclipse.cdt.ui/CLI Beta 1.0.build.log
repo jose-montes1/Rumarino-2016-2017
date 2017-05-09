@@ -1,0 +1,131 @@
+
+**** Build of configuration Debug for project CLI Beta 1.0 ****
+
+"C:\\ti\\ccsv7\\utils\\bin\\gmake" -k -j 8 all -O 
+'Building file: ../CMD_JMP.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/include" --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="CMD_JMP.d"  "../CMD_JMP.c"
+'Finished building: ../CMD_JMP.c'
+' '
+'Building file: ../Command parser - working.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/include" --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="Command parser - working.d"  "../Command parser - working.c"
+"../Command parser - working.c", line 47: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 63: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 66: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 74: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 77: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 90: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 93: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 94: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 95: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 96: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Command parser - working.c", line 97: remark #1532-D: (ULP 5.3) Detected printf() operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+'Finished building: ../Command parser - working.c'
+' '
+'Building file: ../General_JMP.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/include" --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="General_JMP.d"  "../General_JMP.c"
+"../General_JMP.c", line 53: remark #1530-D: (ULP 5.1) Detected divide operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../General_JMP.c", line 168: remark #1543-D: (ULP 12.2) Detected for loop with repetitive data transfer. Recommend using DMA
+"../General_JMP.c", line 169: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../General_JMP.c", line 170: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../General_JMP.c", line 170: remark #2553-D: (ULP 14.1) Array index (involving "j") of type "int". Recommend using "unsigned int"
+"../General_JMP.c", line 171: remark #2553-D: (ULP 14.1) Array index (involving "j") of type "int". Recommend using "unsigned int"
+"../General_JMP.c", line 192: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../General_JMP.c", line 192: remark #1530-D: (ULP 5.1) Detected modulo operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../General_JMP.c", line 193: remark #1530-D: (ULP 5.1) Detected divide operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../General_JMP.c", line 195: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+"../General_JMP.c", line 196: remark #2553-D: (ULP 14.1) Array index (involving "i") of type "int". Recommend using "unsigned int"
+'Finished building: ../General_JMP.c'
+' '
+'Building file: ../Serial_JMPv2.2.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/include" --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="Serial_JMPv2.2.d"  "../Serial_JMPv2.2.c"
+"../Serial_JMPv2.2.c", line 69: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../Serial_JMPv2.2.c", line 82: remark #1528-D: (ULP 3.1) Detected flag polling using UCTXIFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../Serial_JMPv2.2.c", line 325: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"../Serial_JMPv2.2.c", line 337: remark #1528-D: (ULP 3.1) Detected flag polling using UCTXIFG. Recommend using an interrupt combined with enter LPMx and ISR
+"../Serial_JMPv2.2.c", line 649: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../Serial_JMPv2.2.c", line 671: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../Serial_JMPv2.2.c", line 675: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"../Serial_JMPv2.2.c", line 542 (col. 6): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Serial_JMPv2.2.c", line 544 (col. 19): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Serial_JMPv2.2.c", line 545 (col. 22): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"../Serial_JMPv2.2.c", line 546 (col. 22): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+'Finished building: ../Serial_JMPv2.2.c'
+' '
+'Building file: ../main.c'
+'Invoking: MSP430 Compiler'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --include_path="C:/ti/ccsv7/ccs_base/msp430/include" --include_path="C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/include" --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --preproc_with_compile --preproc_dependency="main.d"  "../main.c"
+"..\Serial_JMPv2.2.c", line 69: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"..\Serial_JMPv2.2.c", line 82: remark #1528-D: (ULP 3.1) Detected flag polling using UCTXIFG. Recommend using an interrupt combined with enter LPMx and ISR
+"..\Serial_JMPv2.2.c", line 325: remark #1527-D: (ULP 2.1) Detected SW delay loop using __delay_cycles. Recommend using a timer module instead
+"..\Serial_JMPv2.2.c", line 337: remark #1528-D: (ULP 3.1) Detected flag polling using UCTXIFG. Recommend using an interrupt combined with enter LPMx and ISR
+"..\Serial_JMPv2.2.c", line 649: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"..\Serial_JMPv2.2.c", line 671: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"..\Serial_JMPv2.2.c", line 675: remark #1527-D: (ULP 2.1) Detected SW delay loop using empty loop. Recommend using a timer module instead
+"..\Serial_JMPv2.2.c", line 542 (col. 6): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"..\Serial_JMPv2.2.c", line 544 (col. 19): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"..\Serial_JMPv2.2.c", line 545 (col. 22): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+"..\Serial_JMPv2.2.c", line 546 (col. 22): remark #1531-D: (ULP 5.2) Detected floating point operation(s). Recommend moving them to RAM during run time or not using as these are processing/power intensive
+'Finished building: ../main.c'
+' '
+'Building target: CLI Beta 1.0.out'
+'Invoking: MSP430 Linker'
+"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/bin/cl430" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"CLI Beta 1.0.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"C:/ti/ccsv7/ccs_base/msp430/include" -i"C:/ti/ccsv7/ccs_base/msp430/lib/5xx_6xx_FRxx" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/lib" -i"C:/ti/ccsv7/tools/compiler/ti-cgt-msp430_16.12.0.STS/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="CLI Beta 1.0_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "CLI Beta 1.0.out" "./CMD_JMP.obj" "./Command parser - working.obj" "./General_JMP.obj" "./Serial_JMPv2.2.obj" "./main.obj" "../lnk_msp430f5529.cmd"  -llibmath.a -llibc.a 
+<Linking>
+error #10056: symbol "initializeCommandList" redefined: first defined in "./CMD_JMP.obj"; redefined in "./Command parser - working.obj"
+error #10056: symbol "addCommand" redefined: first defined in "./CMD_JMP.obj"; redefined in "./Command parser - working.obj"
+error #10056: symbol "verifyCommand" redefined: first defined in "./CMD_JMP.obj"; redefined in "./Command parser - working.obj"
+error #10056: symbol "USB_getline_b" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_getline_a" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_putchar" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_getchar" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_setup" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "initializeCommandList" redefined: first defined in "./CMD_JMP.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_getchar_n" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "I2C_read" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_println" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "__TI_int46" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "__TI_int56" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "__TI_int55" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_print_value" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_getline_b" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USCI_A0_ISR" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USCI_B0_ISR" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USBBlock" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "addCommand" redefined: first defined in "./CMD_JMP.obj"; redefined in "./main.obj"
+error #10056: symbol "I2C_write" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USCI_A1_ISR" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "testCLI" redefined: first defined in "./Command parser - working.obj"; redefined in "./main.obj"
+error #10056: symbol "main" redefined: first defined in "./Command parser - working.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_print_status" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "verifyCommand" redefined: first defined in "./CMD_JMP.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_print_float" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_setup" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_print" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "wasUSBBlock" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "getLineAsynch" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UARTBlock" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_putchar" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "I2C_setup" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_println" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "wasUARTBlock" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_getchar" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_print" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_print_status" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "UART_getchar_n" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+error #10056: symbol "USB_print_value" redefined: first defined in "./Serial_JMPv2.2.obj"; redefined in "./main.obj"
+remark #10372-D: (ULP 4.1) Detected uninitialized Port A in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+error #10010: errors encountered during linking; "CLI Beta 1.0.out" not built
+remark #10372-D: (ULP 4.1) Detected uninitialized Port C in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+remark #10372-D: (ULP 4.1) Detected uninitialized Port D in this project. Recommend initializing all unused ports to eliminate wasted current consumption on unused pins.
+
+>> Compilation failure
+makefile:146: recipe for target 'CLI Beta 1.0.out' failed
+gmake[1]: *** [CLI Beta 1.0.out] Error 1
+gmake: *** [all] Error 2
+makefile:142: recipe for target 'all' failed
+
+**** Build Finished ****

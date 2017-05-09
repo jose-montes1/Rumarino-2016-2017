@@ -1,7 +1,7 @@
 ******************************************************************************
-                  MSP430 Linker PC v16.9.2                     
+                  MSP430 Linker PC v16.9.0                     
 ******************************************************************************
->> Linked Tue Mar 07 20:27:48 2017
+>> Linked Thu Apr 20 11:47:12 2017
 
 OUTPUT FILE NAME:   <ROV mode v1.0.out>
 ENTRY POINT SYMBOL: "_c_int00_noargs_noexit"  address: 000044ea
@@ -232,7 +232,7 @@ MODULE SUMMARY
     +--+--------------------+------+---------+---------+
        Total:               1568   8         18     
                                                     
-    C:\ti\ccsv6\tools\compiler\ti-cgt-msp430_16.9.2.LTS\lib\rts430x_lc_rd_eabi.lib
+    C:\ti\ccsv7\tools\compiler\ti-cgt-msp430_16.9.0.LTS\lib\rts430x_lc_rd_eabi.lib
        autoinit_wdt.obj     130    0         0      
        cpy_tbl.obj          102    0         0      
        div16s.obj           44     0         0      

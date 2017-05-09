@@ -30,8 +30,8 @@
  *\**********************************************************************************************************/
 
 char *UARTBuff;										//Modify serial code to use pointers instead of global variables - protip: use pointer to UARTBuf
-char UARTBlock;
-char wasUARTBlock;
+char UARTBlock = 1;
+char wasUARTBlock = 0;
 
 void UART_setup(unsigned long baudRate){
 	P3SEL = BIT3+BIT4;                        // P3.4,5 = USCI_A0 TXD/RXD
@@ -270,7 +270,7 @@ __interrupt void USCI_A0_ISR(void){
  *\**********************************************************************************************************/
 
 char *USBBuff;
-char USBBlock;
+char USBBlock = 1;
 char wasUSBBlock = 0;
 
 void USB_setup(unsigned long baudRate){

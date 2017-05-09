@@ -1,0 +1,86 @@
+Motor Bandwidth Calibration
+
+Incremental Negative to Positive ratio convertions for the whole line
+
+thrust 1 ratio = 2
+pwm 1 = 1450
+
+thrust 2 ratio = 1.84
+pwm 2 = 1400
+
+thrust 3 ratio = 1.67
+pwm 3 = 1350
+
+thrust 4 ratio = 1.65
+pwm 4 = 1300
+
+thrust 5 ratio = 1.64
+pwm 5 = 1250
+
+thrust 6 ratio = 1.58
+pwm 6 = 1200
+
+thrust 7 ratio = 1.55
+pwm 7 = 1150
+
+thrust 8 ratio = 1.46
+pwm 8 = 1100
+
+polynomial fit for this is estimated to be
+3.374x10^-8x^3 + 0.1565x - 0.0001257x^2 - 63.52
+
+
+for 20% working zone
+
+
+pwm = 1510 thrust = 0
+pwm = 1520 thrust = 0
+pwm = 1530 thrust = 0.02
+pwm = 1540 thrust = 0.08
+pwm = 1550 thrust = 0.14
+pwm = 1560 thrust = 0.23
+pwm = 1570 thrust = 0.32
+pwm = 1580 thrust = 0.43
+
+pwm = 1490 thrust = 0
+pwm = 1480 thrust = 0
+pwm = 1470 thrust = 0.02
+pwm = 1460 thrust = 0.03
+pwm = 1450 thrust = 0.07
+pwm = 1440 thrust = 0.11
+pwm = 1430 thrust = 0.16
+pwm = 1420 thrust = 0.23
+
+
+
+x = [1490 1480 1470 1460 1450 1440 1430 1420]
+y = [0 0 1 2.67 2 2.09 2 1.87]
+
+linear fit
+-0.03x+45
+quadratic fit
+-0.001x^2 + 3x + 2163
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

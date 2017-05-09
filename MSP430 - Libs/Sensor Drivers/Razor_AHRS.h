@@ -14,18 +14,13 @@
 #define IMU_BUFFER 60			//Malloc buffer size with slight overshoot
 
 
-
-//Variables that store the values for a particular
-//angle
-float yaw,pitch,roll;
-//Variables were the values for the particular
-//sensor are sotred
-float acc_x,acc_y,acc_z;
-float mag_x,mag_y,mag_z;
-float gyr_x,gyr_y,gyr_z;
+void RAZOR_get_yaw(float *yaw);
+void RAZOR_get_pitch(float *pitch);
+void RAZOR_get_roll(float *roll);
 
 void RAZOR_sngl_setup();
 void RAZOR_cont_setup();
+
 void RAZOR_out_angles();
 void RAZOR_out_acc();
 void RAZOR_out_gyr();
