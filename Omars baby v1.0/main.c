@@ -22,7 +22,7 @@ int32 pressure;
 int32 temp;
 int samp;
 
-#define Controller_Gain 2.0
+#define Controller_Gain 23.0
 
 void SAMPLE_measure(){
 	PRESSURE_start_conversion();
@@ -156,7 +156,7 @@ int main(void) {
 		else{
 			USB_println("Not doing anything");
 			MOTOR_speed(0,5);
-			__delay_cycles(20000);
+			__delay_cycle(20000);
 		}
 		//--------------------------------------------------------------------------------------------------------------------
 	}

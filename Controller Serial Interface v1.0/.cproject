@@ -50,8 +50,6 @@
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_16.12.compilerID.DIAG_WRAP.61099299" name="Wrap diagnostic messages (--diag_wrap)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.12.compilerID.DIAG_WRAP" value="com.ti.ccstudio.buildDefinitions.MSP430_16.12.compilerID.DIAG_WRAP.off" valueType="enumerated"/>
 								<option id="com.ti.ccstudio.buildDefinitions.MSP430_16.12.compilerID.INCLUDE_PATH.1903501104" name="Add dir to #include search path (--include_path, -I)" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.12.compilerID.INCLUDE_PATH" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${CCS_BASE_ROOT}/msp430/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${WorkspaceDirPath}/MSP430 - libs&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${WorkspaceDirPath}/MSP430 - libs/Sensor Drivers&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${CG_TOOL_ROOT}/include&quot;"/>
 								</option>
 								<inputType id="com.ti.ccstudio.buildDefinitions.MSP430_16.12.compiler.inputType__C_SRCS.1434383" name="C Sources" superClass="com.ti.ccstudio.buildDefinitions.MSP430_16.12.compiler.inputType__C_SRCS"/>

@@ -12,42 +12,42 @@ C_SRCS += \
 ../General_JMP.c \
 ../MS5837-30BA.c \
 ../Motors_JMP.c \
-../Serial_JMPv2.1.c \
+../Serial_JMPv2.0.c \
 ../main.c 
 
 C_DEPS += \
 ./General_JMP.d \
 ./MS5837-30BA.d \
 ./Motors_JMP.d \
-./Serial_JMPv2.1.d \
+./Serial_JMPv2.0.d \
 ./main.d 
 
 OBJS += \
 ./General_JMP.obj \
 ./MS5837-30BA.obj \
 ./Motors_JMP.obj \
-./Serial_JMPv2.1.obj \
+./Serial_JMPv2.0.obj \
 ./main.obj 
 
 OBJS__QUOTED += \
 "General_JMP.obj" \
 "MS5837-30BA.obj" \
 "Motors_JMP.obj" \
-"Serial_JMPv2.1.obj" \
+"Serial_JMPv2.0.obj" \
 "main.obj" 
 
 C_DEPS__QUOTED += \
 "General_JMP.d" \
 "MS5837-30BA.d" \
 "Motors_JMP.d" \
-"Serial_JMPv2.1.d" \
+"Serial_JMPv2.0.d" \
 "main.d" 
 
 C_SRCS__QUOTED += \
 "../General_JMP.c" \
 "../MS5837-30BA.c" \
 "../Motors_JMP.c" \
-"../Serial_JMPv2.1.c" \
+"../Serial_JMPv2.0.c" \
 "../main.c" 
 
 

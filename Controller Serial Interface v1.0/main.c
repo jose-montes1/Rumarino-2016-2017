@@ -1,5 +1,5 @@
-#include <msp430.h>
-#include "Serial_JMPv2.1.h"
+#include <msp430.h> 
+#include "Serial_JMPv2.0.h"
 #include "typecast.h"
 #include "MS5837-30BA.h"
 #include "Motors_JMP.h"
@@ -42,7 +42,7 @@ struct serialConditions {
 };
 
 
-void forwards(unsigned int time, int speed, unsigned char *done){
+void forward(unsigned int time, int speed, unsigned char *done){
 	MOTOR_speed(speed, H_MOTORS);	//Sends speed to front two motors
 	timeExceed(time, done);
 }
@@ -84,7 +84,6 @@ int main(void) {
 
 
 	//Controller variables
-	int16 pressure = 0;
 	int depth_gain = 0;
 	float reference = 0;
 	float actual_depth_bars = 0;
@@ -99,7 +98,7 @@ int main(void) {
 
 
 
-	struct serialConditions conditions = {0,0,0,0,0,0,0,0,0,1};
+	struct serialConditions conditions = {0,0,0,0,1,0,0,0,0,1};
 
 
 
@@ -318,7 +317,7 @@ int main(void) {
 					right_motor += 5;
 					left_motor += 5;
 				}
-				conditions.clearInput = 1;
+
 				/* Manual control operation */
 			}else if(commands[0] == 's'){
 				if(right_motor != left_motor){
@@ -328,7 +327,6 @@ int main(void) {
 					right_motor -= 5;
 					left_motor -= 5;
 				}
-				conditions.clearInput = 1;
 			}else if(commands[0] == 'a'){
 				if(right_motor == left_motor){
 					right_motor = 0;
@@ -337,7 +335,6 @@ int main(void) {
 					right_motor += 5;
 					left_motor -= 5;
 				}
-				conditions.clearInput = 1;
 			}else if(commands[0] == 'd'){
 				if(right_motor == left_motor){
 					right_motor = 0;
@@ -346,7 +343,6 @@ int main(void) {
 					right_motor -= 5;
 					left_motor += 5;
 				}
-				conditions.clearInput = 1;
 			}
 
 			/* Change the input setting to User mode */
@@ -413,22 +409,20 @@ int main(void) {
 
 			/* Depth controller section*/
 			if(conditions.depthControllerEnabled){
-				PRESSURE_start_conversion();
-				pressure = PRESSURE_get_pressure();
 				actual_depth_bars = (float)33.4552565551477*(pressure);       // convert bars to milibars
 				actual_depth_milibars = (float)(actual_depth_bars/10000); //convert milibars to feet
 				actual_depth_feet = (float)(actual_depth_milibars - 29);  // calibrate depending on altitude above sea
 				actual_depth_pwm = (actual_depth_feet*6.25);
 				error = (reference - actual_depth_pwm);      //calculate error
-				output = depth_gain*error;
+				output = controller_gain*error;
 				if(output > MOTOR_CAP){
 					v_motors = MOTOR_CAP;
-				}else if(output < -1*MOTOR_CAP){
+				}else if(output < MOTOR_CAP){
 					v_motors = -1*MOTOR_CAP;
 				}else{
-					v_motors = output;
+					v_motor = MOTOR_CAP;
 				}
-				MOTOR_speed(v_motors, V_MOTORS);
+				MOTOR_speed(v_motor, V_MOTORS);
 			}
 
 			/* Align Controller section*/
@@ -445,7 +439,6 @@ int main(void) {
 			if(conditions.forwardsDeadreckoning){
 				if(tiemDone){
 					conditions.forwardsDeadreckoning = 0;
-					USB_println("Done forwards");
 				}
 			}
 
@@ -453,13 +446,10 @@ int main(void) {
 			if (conditions.terminalIO){
 				USB_print_value("set point is: ", reference);
 				USB_print_value("  pressure is: ", pressure);
-				USB_print_value(" depth gain: ", depth_gain);
 				USB_print_float("  depth is: ", actual_depth_bars);
 				USB_print_float("  depth is: ", actual_depth_milibars);
 				USB_print_float("  depth is: ", actual_depth_feet);
 				USB_print_value("  vert motors: ", v_motors);
-				USB_println(" ");
-				conditions.terminalIO = 0;
 			}
 
 			/* Prints usage to the script */

@@ -9,18 +9,18 @@
  *  Created on: Oct 26, 2016
  *      Author: jose.montes1
  *
- * A collection of of general methods utilized
- * for the msp430 platform
+ * A collection of of methods utilized in
+ * the laboratories for MICRO 2
  *
  *
  */
 
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// Timer Commands ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-char delayC;			// Determines wether the interrupt utilizes the timer for delayCs or other functions
-
-
 
 /*\****************************************************************
  *Function Description
@@ -49,7 +49,6 @@ void interrupts(char on){
  *\****************************************************************/
 
 void delay(unsigned long miliSeconds){
-	delayC = 1;						// Turn on timer delayCs
 	unsigned long operations = (32768*miliSeconds)/1000;
 	TB0CTL |= TBCLR; 				// Clear Timer content
 	TB0CCR0 = operations;			// Set the timer period
@@ -64,74 +63,9 @@ void delay(unsigned long miliSeconds){
 
 	return;
 }
-
 /*\****************************************************************
  *Function Description
- *		Delays the micro a certain amount of time while setting
- *		it in low power mode.
- *Parameters
- *		Miliseconds - miliseconds to wait
- *
- *\****************************************************************/
-
-void delaySeconds(unsigned long seconds){
-	delayC = 1;						//Turns off timer delayCs
-	unsigned long operations = 512*seconds;
-	TB0CTL |= TBCLR; 				// Clear Timer content
-	TB0CCR0 = operations;			// Set the timer period
-	TB0CTL |= TBSSEL_1 + ID_3;		// Use aclk and divide by 8
-	TB0EX0 |= 0b111;				// Divide by 8
-	TB0CTL |= MC_1;					// Use up mode
-	TB0CCTL0 |= CCIE;				// Enable Interrupt
-	__bis_SR_register(GIE + LPM0_bits);	// halt cpu
-	return;
-}
-
-unsigned char *timeExcedded;
-void timeExceed(int seconds, unsigned char *dest){
-	delayC = 0;						//Turns off timer delayCs
-	timeExcedded = dest;			//Set the external variable
-	*timeExcedded = 0;				//Initialize value to zero
-	unsigned long operations = 512*(seconds);
-	TB0CTL |= TBCLR; 				// Clear Timer content
-	TB0CCR0 = operations;			// Set the timer period
-	TB0CTL |= TBSSEL_1 + ID_3;		// Use aclk and divide by 8
-	TB0EX0 |= 0b111;				// Divide by 8
-	TB0CTL |= MC_1;					// Use up mode
-	TB0CCTL0 |= CCIE;				// Enable Interrupt
-}
-
-
-/*\****************************************************************
- *Function Description
- *		Stops the current timer without affecting its value
- *Parameters
- *
- *
- *\****************************************************************/
-
-void inline stopDelay(){
-	TB0CTL &= ~MC_1;					// Use up mode
-}
-
-/*\****************************************************************
- *Function Description
- *		Starts the current timer wihtout affecting its value
- *Parameters
- *
- *
- *\****************************************************************/
-
-
-void inline startDelay(){
-	TB0CTL |= MC_1;					// Use up mode
-}
-
-
-
-/*\****************************************************************
- *Function Description
- *		Timer B interrupt. Disables the running timer delayC
+ *		Timer B interrupt. Disables the running timer delay
  *Parameters
  *
  *
@@ -139,16 +73,16 @@ void inline startDelay(){
 
 #pragma vector = TIMER0_B0_VECTOR
 __interrupt void TIMER_B0(void){
-	if(delayC){
-		LPM0_EXIT;
-	}else{
-		*timeExcedded = 1;
-	}
+
 	TB0CTL &= ~MC_1;				//Stop timer
 	TB0CTL |= MC_0;					//Make sure its stopped
+	LPM0_EXIT;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////// Number methods
 

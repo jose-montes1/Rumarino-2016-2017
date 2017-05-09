@@ -13,7 +13,7 @@ ORDERED_OBJS += \
 "./General_JMP.obj" \
 "./MS5837-30BA.obj" \
 "./Motors_JMP.obj" \
-"./Serial_JMPv2.1.obj" \
+"./Serial_JMPv2.0.obj" \
 "./main.obj" \
 "../lnk_msp430f5529.cmd" \
 $(GEN_CMDS__FLAG) \
@@ -157,8 +157,8 @@ Controller\ Serial\ Interface\ v1.0.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(BIN_OUTPUTS__QUOTED)$(EXE_OUTPUTS__QUOTED)
-	-$(RM) "General_JMP.obj" "MS5837-30BA.obj" "Motors_JMP.obj" "Serial_JMPv2.1.obj" "main.obj" 
-	-$(RM) "General_JMP.d" "MS5837-30BA.d" "Motors_JMP.d" "Serial_JMPv2.1.d" "main.d" 
+	-$(RM) "General_JMP.obj" "MS5837-30BA.obj" "Motors_JMP.obj" "Serial_JMPv2.0.obj" "main.obj" 
+	-$(RM) "General_JMP.d" "MS5837-30BA.d" "Motors_JMP.d" "Serial_JMPv2.0.d" "main.d" 
 	-@echo 'Finished clean'
 	-@echo ' '
 

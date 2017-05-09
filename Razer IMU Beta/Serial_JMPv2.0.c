@@ -30,8 +30,8 @@
  *\**********************************************************************************************************/
 
 char *UARTBuff;										//Modify serial code to use pointers instead of global variables - protip: use pointer to UARTBuf
-char UARTBlock = 1;
-char wasUARTBlock = 0;
+char UARTBlock;
+char wasUARTBlock;
 
 void UART_setup(unsigned long baudRate){
 	P3SEL = BIT3+BIT4;                        // P3.4,5 = USCI_A0 TXD/RXD
@@ -141,12 +141,12 @@ void UART_getchar_n(char *dest, unsigned int amount, char endian){
 	int i;
 	UARTBuff = dest;						// Set receiving location to destination
 
-	if(endian == 'l'){
+	if(endian == 'b'){
 		for(i = amount; i > 0; i--){
 			LPM0;									  // Wait for interrupt
 			UARTBuff++;
 		}
-	}else if(endian == 'b'){
+	}else if(endian == 'l'){
 		UARTBuff += (amount-1);
 		for(i = amount; i > 0; i--){
 			LPM0;									  // Wait for interrupt
