@@ -1,0 +1,118 @@
+#include <msp430.h> 
+#include "types.h"
+
+
+/*
+ * main.c
+ */
+
+
+//Struct utilized to keep tract of the conditions of the controller
+struct serialConditions {
+	uint8 depthControllerEnabled : 1;		//Determines whether the depth controller is enabled
+	uint8 alignControllerEnabled : 1;		//Determines whether the align controller is enabled
+	uint8 systemStart : 1;					//Determines whether the system starts or not
+	uint8 systemInput : 1;					//Determines if the system receives input from the script or from the user
+	/* 0 - input from terminal | 1 - input from script */
+	uint8 scriptControl : 1;				//Determines if you can use the wasd keys to control the orientation - no manual depth control
+	/* 0 - manual control | 1 - control from script */
+	uint8 clearInput : 1; 					//Determines when to clear inputs (complete or invalid command)
+	uint8 firstCommand : 1;					//Determines if it is the first input
+	uint8 secondCommand : 1;				//Determines if it is the second command
+	uint8 thirdCommand : 1;					//Determines if it is the third command
+
+	uint8 validCommand : 1;					//Determines whether it is a valid command or not
+
+	uint8 printFeedbackFrame : 1;			//Determines when to print an output frame from the status
+	uint8 printContinousFrames : 1;			// TODO - maybe
+	uint8 printStatusFrame : 1;				//Determines when to print a system status frame
+};
+
+
+
+
+
+int main(void) {
+	WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	USB_setup(9600);
+
+
+	struct serialConditions conditions = {0,0,0,0,0};
+
+	/* Controller shit */
+
+
+	int8 commands[3];
+
+	while(!conditions.systemStart){ 							//Verify that the system is enabled
+		USB_println("Getting command from the controller");		//Print usage to user
+		USB_getchar(commands, 'b');								//Get input from user in blocking mode
+		if(*commands == 's'){									//Error check input
+			conditions.systemStart = 1;
+		}
+	}
+	if(command[0] != 0){
+		/* Enter command management /
+		 * o - depth controller
+		 * a - alignment controller
+		 *
+		 *
+		 *
+		 */
+		/* Print feedback frame */
+		if(conditions.firstCommand && conditions.printFeedbackFrame){
+			USB_print("Entered first operator: ");
+			USB_putchar(command[0]);
+			USB_println(" ");
+			conditions.firstCommand = 0;
+		}
+		/* Enter depth controller Commands */
+		if(command == 'o'){
+			if(conditions.secondCommand){
+
+			}
+
+
+
+
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+	}
+
+	
+	if(conditions.clearInput){
+		if(conditions.validCommand){
+			USB_println("Entered a valid command");
+		}else{
+			USB_println("Entered a invalid command");
+		}
+
+
+		commands[0] = 0;
+		commands[1] = 1;
+		commands[2] = 3;
+
+		conditions.firstCommand = 1;
+		conditions.secondCommand = 1;
+		conditions.thirdCommand  = 1;
+
+		USB_getchar(&command, 'a');
+		conditions.clearInput = 0;
+	}
+
+
+
+
+	return 0;
+}

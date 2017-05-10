@@ -1,0 +1,30 @@
+/*Implementation using current methods and functions
+	unsigned char amountOfCommands;
+	char cmd[COMMAND_BUFFER_SIZE], *original;
+	original = cmd;
+	USB_getchar(cmd, 'a');
+	while(1){
+		if(cmd != 0){
+			if(*cmd == '\n'){
+				verifyCommadns(commands, original);
+				cmd = original;
+			}
+			USB_getchar(++cmd, 'a');)
+		}
+	*/
+
+
+
+
+/*Optional text output
+switch(amountOfCommands){
+				case 1: USB_print("Received first operator: ");break;
+				case 2: USB_print("Received second operator: ");break;
+				case 3: USB_print("Received third operator: "); break;
+			}
+			USB_print(cmd); USB_println("");
+*/ 	
+
+
+
+

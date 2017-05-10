@@ -1,0 +1,16 @@
+
+**** Build of configuration Debug for project Fuzzy controller beta ****
+
+"C:\\ti\\ccsv6\\utils\\bin\\gmake" -k -j 8 all -O 
+'Building target: Fuzzy controller beta.out'
+'Invoking: MSP430 Linker'
+"" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z -m"Fuzzy controller beta.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i"/msp430/include" -i"/msp430/lib/5xx_6xx_FRxx" -i"/lib" -i"/include" --reread_libs --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Fuzzy controller beta_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "Fuzzy controller beta.out" "./main.obj" "../Fuzzy-Engine/Debug/main.obj" "./Fuzzy-Engine/main.obj" "../lnk_msp430f5529.cmd" "../Fuzzy-Engine/lnk_msp430f5529.cmd"  -llibmath.a -llibc.a 
+makefile:149: recipe for target 'Fuzzy controller beta.out' failed
+process_begin: CreateProcess(NULL, "" -vmspx --data_model=restricted --use_hw_mpy=F5 --advice:power=all --define=__MSP430F5529__ -g --printf_support=minimal --diag_warning=225 --diag_wrap=off --display_error_number --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 -z "-mFuzzy controller beta.map" --heap_size=160 --stack_size=160 --cinit_hold_wdt=on -i/msp430/include -i/msp430/lib/5xx_6xx_FRxx -i/lib -i/include --reread_libs --diag_wrap=off --display_error_number --warn_sections "--xml_link_info=Fuzzy controller beta_linkInfo.xml" --use_hw_mpy=F5 --rom_model -o "Fuzzy controller beta.out" ./main.obj ../Fuzzy-Engine/Debug/main.obj ./Fuzzy-Engine/main.obj ../lnk_msp430f5529.cmd ../Fuzzy-Engine/lnk_msp430f5529.cmd -llibmath.a -llibc.a, ...) failed.
+make (e=87): The parameter is incorrect.
+
+gmake[1]: *** [Fuzzy controller beta.out] Error 87
+gmake: *** [all] Error 2
+makefile:145: recipe for target 'all' failed
+
+**** Build Finished ****

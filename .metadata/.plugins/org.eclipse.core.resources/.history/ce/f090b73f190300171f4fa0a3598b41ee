@@ -1,0 +1,56 @@
+#include <msp430.h> 
+#include "Serial_JMPv2.0.h"
+#include "Motors_JMP.h"
+#include "General_JMP.h"
+
+/*
+ * main.c
+ */
+void forward(unsigned int time, unsigned int speed){
+	MOTOR_speed(speed, 8);	//Sends speed to front two motors
+	delaySeconds(10);
+	MOTOR_speed(0, 8);
+}
+
+
+
+int main(void) {
+    WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
+	USB_setup(9600);
+	UART_setup(9600);
+
+	char command;
+	char arguments;
+	unsigned int tiem;
+	unsigned int seped;
+
+	while(1){
+		USB_print("Waiting for command");
+		//Serial command processing
+		if(command != 0){
+			if(command == 'f'){ //Full forward?
+				USB_print("Enter time from 0-9, x to exit");
+				USB_println(" ");
+				USB_getchar_b(&arguments);
+				if(arguments > '0' && arguments < '9'){
+					tiem = arguments - '0' + 1;
+					USB_print("Enter speed from 0-9, x to exit");
+					USB_println(" ");
+					USB_getchar_b(&arguments);
+					if(arguments > '0' && arguments < '9'){
+						seped = arguments - '0';
+						forward(tiem, seped);
+					}else{
+						USB_print("Invalid command");
+						USB_println(" ");
+					}
+				}else{
+					USB_print("Invalid command");
+					USB_println(" ");
+				}
+			}
+		//Enter other commands
+		}command = 0;
+
+	}
+}

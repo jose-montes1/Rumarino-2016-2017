@@ -10,3 +10,9 @@ Work Listed in order:
 5. Wrote the code for the beta - Not tested.
 6. Added typecasts to code - Not tested but builds.
 7. Verify that Pressure sensor PROM directions are correct.
+8. Tested modified I2C drivers, they seem to work. Have to further test.
+9. Pressure sensor drivers seem to work. Further testing needed.
+10. Started Razer IMU Beta drivers.
+11. Modified Serial drivers to include USB and Pin UART protocols. Need to test.
+12. Created Motor driver for 4 motor and 2 motor configurations. Need to test.
+13. Simplified motor speed register value calculation. Need to test.
