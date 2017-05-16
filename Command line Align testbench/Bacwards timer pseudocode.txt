@@ -1,0 +1,21 @@
+pseudocode
+
+
+input values: Drag_Fix
+
+
+
+Stop timer
+Store time from old_val = TB0R register			//This is what we will use to count up to
+Store Value in TB0CCR0 register				//This was the original time we wanted to go to
+change interrupt function DelayC = 1			//Change so that the interrupt removes low power mode
+Put old_val*Drag_Fix in TB0CCR0				//Place a fixed value that compensates for drag and computational time in the timer. This is what we will count up to.
+Reset TB0R = 0						//Count up to fixed value
+Put timer to work					//Go go go go
+Place micro in low power mode				//Now sleep until the value is reached
+//Low power mode off - means time ran out		//\\
+Substract each remainder = TB0CCR0 - TB0R		//Fix the value that time exceed is running at
+Place remainder in TB0CCR0				//Place it there
+Rester counter register TB0R = 0			//We reset so that we can use this function again in the same run without adapting it. If we didnt do this the value of TB0R wouldnt fit the assumptions made at the beggining
+Reset DelayC = 0					//Change interrupt so that it works
+Put timer to work again
